@@ -24,6 +24,10 @@ public class ElementSuite {
 		}
 	};
 	
+	public ElementSuite next(){
+		return prochain;
+	};
+	
 	int valeur;
 	ElementSuite prochain;
 }

@@ -98,22 +98,17 @@ public class SuiteChainee implements ISuiteChainee {
 			System.out.println(e.getMessage());
 			return;
 		}
-		
-		String suite = "";
-		for (int i = 0; i < taille; i++){
-			if (i != 0)
-			{
-				suite += ", ";
-			}
-			suite.concat(Integer.toString(getAt(i).valeur));
-		}
-		
+				
 		// Modification des propriétés.
 		properties.setProperty("val1", Integer.toString(val1));
 		properties.setProperty("val2", Integer.toString(val2));
 		properties.setProperty("operateur", operateur);
 		properties.setProperty("taille", Integer.toString(taille));
-		properties.setProperty("contenu", suite);
+		properties.setProperty("contenu", toString());
+		
+		premiereValeurInterne = val1;
+		deuxiemeValeurInterne = val2;
+		operateurInterne = operateur;
 		
 		// On utilise l'index précédent s'il existe et si on ne doit pas écraser la suite.
 		if(estVide || nouveauFichier)
@@ -146,44 +141,193 @@ public class SuiteChainee implements ISuiteChainee {
 		premierElement.add(nouvelElement);
 	}
 	
-	public void removeAt(int position)
-	{
-		
-	}
-	
 	public void removeItem(ElementSuite element)
 	{
+		ElementSuite suivant = premierElement;
+		int index = 0;
+		while (suivant != element || suivant.next() != null)
+		{
+			suivant = suivant.next();
+			index++;
+		}
+		if(suivant != null){
+			removeAt(index);
+		}
+	}
+	
+	
+	public ElementSuite getAt(int position)
+	{
+		ElementSuite suivant = premierElement;
 		
+		for (int i = 0; i < position; i++){
+			if (suivant == null)
+			{
+				System.out.println("Erreur getAt: élément hors de portée");
+				return null;
+			}
+			suivant = suivant.next();
+		}
+		
+		return suivant;
 	}
 	
 	public void setAt(ElementSuite nouvelElement, int position)
 	{
-		
+		ElementSuite remplace = getAt(position);
+		if (remplace == null)
+		{
+			System.out.println("Erreur setAt: élément hors de portée");
+			return;
+		}
+		remplace = nouvelElement;
 	}
 	
-	public ElementSuite getAt(int position)
+	public void removeAt(int position)
 	{
-		return null;
+		ElementSuite avant = getAt(position-1);
+		ElementSuite courant = getAt(position);
+		if (avant == null || courant == null)
+		{
+			System.out.println("Erreur removeAt: élément hors de portée");
+			return;
+		}
+		avant.prochain = courant.next();
+		courant.prochain = null;
+		
 	}
 	
 	public int getSize()
 	{
-		return 0;
+		ElementSuite suivant = premierElement;
+		int grosseur = 1;
+
+		while (suivant.next() != null)
+		{
+			suivant = suivant.next();
+			grosseur++;
+		}
+		return grosseur;
 	}
 	
 	public void reset()
 	{
-		
+		ElementSuite courant = premierElement;
+		ElementSuite suivant;
+
+		while(courant.next() != null)
+		{
+			suivant = courant.next();
+			courant.prochain = null;
+		}
 	}
 	
 	public boolean isValid()
 	{
-		return true;
+		boolean toutEstCorrecte = true;
+		// La suite n'est pas vérifiable s'il y a 2 élements ou moins.
+		if(premierElement != null && premierElement.next() != null)
+		{
+			ElementSuite elementTemp1 = premierElement;
+			ElementSuite elementTemp2= premierElement.next();
+			
+			try
+			{
+				switch(operateurInterne){
+				case "addition":
+					while(toutEstCorrecte)
+					{
+						// On détermine la prochaine valeur.
+						int prochaineValeur = addition(elementTemp1.valeur, elementTemp2.valeur);
+						// On avance dans la suite.
+						elementTemp1 = elementTemp2;
+						if(elementTemp2.next() == null){
+							break;
+						}
+						elementTemp2 = elementTemp2.next();
+						// On vérifie si la nouvelle valeur respecte la règle ou non.
+						if(elementTemp2.valeur != prochaineValeur)
+						{
+							toutEstCorrecte = false;
+						}
+					}
+					break;
+				case "soustraction":
+					while(toutEstCorrecte)
+					{
+						// On détermine la prochaine valeur.
+						int prochaineValeur = soustraction(elementTemp1.valeur, elementTemp2.valeur);
+						// On avance dans la suite.
+						elementTemp1 = elementTemp2;
+						if(elementTemp2.next() == null){
+							break;
+						}
+						elementTemp2 = elementTemp2.next();
+						// On vérifie si la nouvelle valeur respecte la règle ou non.
+						if(elementTemp2.valeur != prochaineValeur)
+						{
+							toutEstCorrecte = false;
+						}
+					}
+				case "multiplication":
+					while(toutEstCorrecte)
+					{
+						// On détermine la prochaine valeur.
+						int prochaineValeur = multiplication(elementTemp1.valeur, elementTemp2.valeur);
+						// On avance dans la suite.
+						elementTemp1 = elementTemp2;
+						if(elementTemp2.next() == null){
+							break;
+						}
+						elementTemp2 = elementTemp2.next();
+						// On vérifie si la nouvelle valeur respecte la règle ou non.
+						if(elementTemp2.valeur != prochaineValeur)
+						{
+							toutEstCorrecte = false;
+						}
+					}
+				case "division":
+					while(toutEstCorrecte)
+					{
+						// On détermine la prochaine valeur.
+						int prochaineValeur = division(elementTemp1.valeur, elementTemp2.valeur);
+						// On avance dans la suite.
+						elementTemp1 = elementTemp2;
+						if(elementTemp2.next() == null){
+							break;
+						}
+						elementTemp2 = elementTemp2.next();
+						// On vérifie si la nouvelle valeur respecte la règle ou non.
+						if(elementTemp2.valeur != prochaineValeur)
+						{
+							toutEstCorrecte = false;
+						}
+					}
+				default:
+					throw new Exception("Opérateur invalide.");
+				}
+			}
+			catch (Exception e)
+			{
+				System.out.println(e.getMessage());
+				return false;
+			}
+		}
+		return toutEstCorrecte;
 	}
+	
 	
 	public String toString()
 	{
-		return "";
+		String suite = "";
+		for (int i = 0; i < getSize(); i++){
+			if (i != 0)
+			{
+				suite += ", ";
+			}
+			suite.concat(Integer.toString(getAt(i).valeur));
+		}
+		return suite;
 	}
 	
 	private int addition(int valeur1, int valeur2)
@@ -205,7 +349,7 @@ public class SuiteChainee implements ISuiteChainee {
 		}
 		return ret;
 	}
-	
+
 	private int soustraction(int valeur1, int valeur2)
 	{
 		int ret = valeur1;
@@ -225,7 +369,7 @@ public class SuiteChainee implements ISuiteChainee {
 		}
 		return ret;
 	}
-	
+
 	private int multiplication(int valeur1, int valeur2)
 	{
 		int ret = 0;
@@ -244,7 +388,7 @@ public class SuiteChainee implements ISuiteChainee {
 		
 		return ret;
 	}
-	
+
 	private int division(int valeur1, int valeur2) throws Exception
 	{
 		if(valeur2 == 0){
@@ -270,4 +414,7 @@ public class SuiteChainee implements ISuiteChainee {
 	}
 	
 	private ElementSuite premierElement;
+	private int premiereValeurInterne;
+	private int deuxiemeValeurInterne;
+	private String operateurInterne;
 }
