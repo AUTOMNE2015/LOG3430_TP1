@@ -12,9 +12,10 @@ public class Program {
 	 * @param args
 	 */
 	public static void main(String[] args) {
-		System.out.println("hi");
-		SuiteChainee s = new SuiteChainee("test1.properties", "division", 6, 0, 16, true);
-		System.out.println("i did not die");
+		SuiteChainee s = new SuiteChainee("test1.properties", "division", 1, 2, 5, false);
+		System.out.println(s.isValid());
+		s.add(new ElementSuite(5));
+		System.out.println(s.isValid());
 	}
 
 }

@@ -44,48 +44,53 @@ public class SuiteChainee implements ISuiteChainee {
 		// Création de la suite.
 		
 		premierElement = new ElementSuite(val1);
-		add(new ElementSuite(val2));
-		
+		addSansSauvegarde(new ElementSuite(val2));
+				
 		int valeurCourante1 = val1;
 		int valeurCourante2 = val2;
 		
 		try
 		{
+			if(taille > 10){
+				throw new Exception("Taille excedant 10.");
+			}
+			
+			// Puisque l'element #1 et l'element #2 sont deja dans la suite chainee, on commence a i=2
 			switch(operateur){
 			case "addition":
-				for (int i = 0; i < taille; i++){
+				for (int i = 2; i < taille; i++){
 					int tampon = valeurCourante2;
-					valeurCourante2 = addition(valeurCourante1, val2);
+					valeurCourante2 = addition(valeurCourante1, valeurCourante2);
 					valeurCourante1 = tampon;
 					
-					add(new ElementSuite(valeurCourante2));
+					addSansSauvegarde(new ElementSuite(valeurCourante2));
 				}
 				break;
 			case "soustraction":
-				for (int i = 0; i < taille; i++){
+				for (int i = 2; i < taille; i++){
 					int tampon = valeurCourante2;
-					valeurCourante2 = soustraction(valeurCourante1, val2);
+					valeurCourante2 = soustraction(valeurCourante1, valeurCourante2);
 					valeurCourante1 = tampon;
 					
-					add(new ElementSuite(valeurCourante2));
+					addSansSauvegarde(new ElementSuite(valeurCourante2));
 				}
 				break;
 			case "multiplication":
-				for (int i = 0; i < taille; i++){
+				for (int i = 2; i < taille; i++){
 					int tampon = valeurCourante2;
-					valeurCourante2 = multiplication(valeurCourante1, val2);
+					valeurCourante2 = multiplication(valeurCourante1, valeurCourante2);
 					valeurCourante1 = tampon;
 					
-					add(new ElementSuite(valeurCourante2));
+					addSansSauvegarde(new ElementSuite(valeurCourante2));
 				}
 				break;
 			case "division":
-				for (int i = 0; i < taille; i++){
+				for (int i = 2; i < taille; i++){
 					int tampon = valeurCourante2;
-					valeurCourante2 = division(valeurCourante1, val2);
+					valeurCourante2 = division(valeurCourante1, valeurCourante2);
 					valeurCourante1 = tampon;
 					
-					add(new ElementSuite(valeurCourante2));
+					addSansSauvegarde(new ElementSuite(valeurCourante2));
 				}
 				break;
 			default:
@@ -98,27 +103,36 @@ public class SuiteChainee implements ISuiteChainee {
 			System.out.println(e.getMessage());
 			return;
 		}
-				
+		
+		cheminInterne = chemin;
+		operateurInterne = operateur;
+		estVideInterne = estVide;
+		ancienContenu = properties.getProperty("contenu");
+		
 		// Modification des propriétés.
 		properties.setProperty("val1", Integer.toString(val1));
 		properties.setProperty("val2", Integer.toString(val2));
 		properties.setProperty("operateur", operateur);
 		properties.setProperty("taille", Integer.toString(taille));
-		properties.setProperty("contenu", toString());
 		
-		premiereValeurInterne = val1;
-		deuxiemeValeurInterne = val2;
-		operateurInterne = operateur;
+		if(estVide || ancienContenu == ""){
+		properties.setProperty("contenu", toString());
+		} else {
+			properties.setProperty("contenu", ancienContenu + ", " + toString());
+		}
 		
 		// On utilise l'index précédent s'il existe et si on ne doit pas écraser la suite.
 		if(estVide || nouveauFichier)
 		{
-			properties.setProperty("index", Integer.toString(taille));
+			properties.setProperty("index", "0");
 		}
 		else
 		{
+			String[] temporaire = ancienContenu.split(", ");
+			int indexTestIdunno = temporaire.length;
+			
 			// On additionne l'index précédent avec la taille en paramètre.
-			properties.setProperty("index", Integer.toString(Integer.parseInt(properties.getProperty("index")) + taille));
+			properties.setProperty("index", Integer.toString(indexTestIdunno));
 		}
 
 		// On écrit dans le fichier spécifié.
@@ -138,14 +152,20 @@ public class SuiteChainee implements ISuiteChainee {
 	
 	public void add(ElementSuite nouvelElement)
 	{
-		premierElement.add(nouvelElement);
+		if(premierElement == null)
+		{
+			premierElement = nouvelElement;
+		} else {
+			premierElement.add(nouvelElement);
+		}
+		sauvegarder();
 	}
 	
 	public void removeItem(ElementSuite element)
 	{
 		ElementSuite suivant = premierElement;
 		int index = 0;
-		while (suivant != element || suivant.next() != null)
+		while (suivant != null || suivant != element || suivant.next() != null)
 		{
 			suivant = suivant.next();
 			index++;
@@ -153,8 +173,8 @@ public class SuiteChainee implements ISuiteChainee {
 		if(suivant != null){
 			removeAt(index);
 		}
+		sauvegarder();
 	}
-	
 	
 	public ElementSuite getAt(int position)
 	{
@@ -181,6 +201,7 @@ public class SuiteChainee implements ISuiteChainee {
 			return;
 		}
 		remplace = nouvelElement;
+		sauvegarder();
 	}
 	
 	public void removeAt(int position)
@@ -194,12 +215,16 @@ public class SuiteChainee implements ISuiteChainee {
 		}
 		avant.prochain = courant.next();
 		courant.prochain = null;
+		sauvegarder();
 		
 	}
 	
 	public int getSize()
 	{
 		ElementSuite suivant = premierElement;
+		if(suivant == null){
+			return 0;
+		}
 		int grosseur = 1;
 
 		while (suivant.next() != null)
@@ -215,11 +240,12 @@ public class SuiteChainee implements ISuiteChainee {
 		ElementSuite courant = premierElement;
 		ElementSuite suivant;
 
-		while(courant.next() != null)
+		while(courant != null && courant.next() != null)
 		{
 			suivant = courant.next();
 			courant.prochain = null;
 		}
+		sauvegarder();
 	}
 	
 	public boolean isValid()
@@ -229,7 +255,7 @@ public class SuiteChainee implements ISuiteChainee {
 		if(premierElement != null && premierElement.next() != null)
 		{
 			ElementSuite elementTemp1 = premierElement;
-			ElementSuite elementTemp2= premierElement.next();
+			ElementSuite elementTemp2 = premierElement.next();
 			
 			try
 			{
@@ -269,6 +295,7 @@ public class SuiteChainee implements ISuiteChainee {
 							toutEstCorrecte = false;
 						}
 					}
+					break;
 				case "multiplication":
 					while(toutEstCorrecte)
 					{
@@ -286,6 +313,7 @@ public class SuiteChainee implements ISuiteChainee {
 							toutEstCorrecte = false;
 						}
 					}
+					break;
 				case "division":
 					while(toutEstCorrecte)
 					{
@@ -303,7 +331,9 @@ public class SuiteChainee implements ISuiteChainee {
 							toutEstCorrecte = false;
 						}
 					}
+					break;
 				default:
+					System.out.println(operateurInterne);
 					throw new Exception("Opérateur invalide.");
 				}
 			}
@@ -316,7 +346,6 @@ public class SuiteChainee implements ISuiteChainee {
 		return toutEstCorrecte;
 	}
 	
-	
 	public String toString()
 	{
 		String suite = "";
@@ -325,9 +354,72 @@ public class SuiteChainee implements ISuiteChainee {
 			{
 				suite += ", ";
 			}
-			suite.concat(Integer.toString(getAt(i).valeur));
+			suite = suite.concat(Integer.toString(getAt(i).valeur));
 		}
 		return suite;
+	}
+	
+	private void sauvegarder(){
+		
+		Properties properties = new Properties();
+		
+		File file = new File(cheminInterne);
+		FileInputStream fileInput;
+		
+		try 
+		{
+			// Essai d'ouvrir un stream du fichier.
+			fileInput = new FileInputStream(file);
+			properties.load(fileInput);
+			
+		} 
+		catch (FileNotFoundException e)
+		{
+			// Fichier introuvable, on va créer un nouveau fichier plus tard.
+			System.out.println("Fichier introuvable.");
+		} 
+		catch (IOException e) 
+		{
+			e.printStackTrace();
+		}
+		
+		
+		properties.setProperty("taille", Integer.toString(getSize()));
+		if(getSize() > 0)
+		{
+			properties.setProperty("val1", Integer.toString(getAt(0).valeur));
+		} else {
+			properties.setProperty("val1","");
+		}
+		
+		
+		if(getSize() > 1)
+		{
+			properties.setProperty("val2", Integer.toString(getAt(1).valeur));
+		} else {
+			properties.setProperty("val2","");
+		}
+		
+		if(estVideInterne || ancienContenu == ""){
+			properties.setProperty("contenu", toString());
+		} else if(toString() == ""){
+			properties.setProperty("contenu", ancienContenu);
+		} else {
+			properties.setProperty("contenu", ancienContenu + ", " + toString());
+		}
+		
+		// On écrit dans le fichier spécifié.
+		FileOutputStream fileOut;
+		try {
+			fileOut = new FileOutputStream(file);
+			properties.store(fileOut, "Suite Chainee");
+			fileOut.close();
+		} catch (FileNotFoundException e) {
+			e.printStackTrace();
+		} catch (IOException e) {
+			e.printStackTrace();
+		}
+				
 	}
 	
 	private int addition(int valeur1, int valeur2)
@@ -391,8 +483,13 @@ public class SuiteChainee implements ISuiteChainee {
 
 	private int division(int valeur1, int valeur2) throws Exception
 	{
+		if(valeur1 == 0){
+			return 0;
+		}
+		
 		if(valeur2 == 0){
-			throw new Exception("Division par zéro.");
+			//throw new Exception("Division par zéro.");
+			return 0;
 		}
 		
 		int ret = 0;
@@ -413,8 +510,19 @@ public class SuiteChainee implements ISuiteChainee {
 		return ret;
 	}
 	
+	private void addSansSauvegarde(ElementSuite nouvelElement)
+	{
+		if(premierElement == null)
+		{
+			premierElement = nouvelElement;
+		} else {
+			premierElement.add(nouvelElement);
+		}
+	}
+	
 	private ElementSuite premierElement;
-	private int premiereValeurInterne;
-	private int deuxiemeValeurInterne;
+	private String cheminInterne;
 	private String operateurInterne;
+	private String ancienContenu;
+	private boolean estVideInterne;
 }
