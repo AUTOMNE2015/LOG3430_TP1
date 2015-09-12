@@ -238,6 +238,13 @@ public class SuiteChainee implements ISuiteChainee {
 
 	@Override
 	public ElementSuite getAt(int position) {
+
+		if(position < 0)
+        {
+            System.out.println("Erreur getAt: Element hors de portee");
+            return null;
+        }
+        
 		//Charger();
         ElementSuite suivant = premierElement;
         
@@ -512,6 +519,7 @@ public class SuiteChainee implements ISuiteChainee {
 	
 	private void charger(){
 		// Essai d'ouvrir un stream du fichier.
+        Properties properties = new Properties();
 		File file = new File(cheminInterne);
 		FileInputStream fileInput;
 		try 
@@ -534,7 +542,7 @@ public class SuiteChainee implements ISuiteChainee {
 		}
 		
 		// On charge les properties du fichier (si elles existent)
-		indexInterne = properties.getProperty("index");
+		indexInterne = Integer.parseInt(properties.getProperty("index"));
 		contenuInterne = properties.getProperty("contenu");
 		if(contenuInterne == null)
 		{
@@ -552,7 +560,7 @@ public class SuiteChainee implements ISuiteChainee {
 			// On cree un Array contenant les valeurs de contenu. Ex: ["1", "2", "3", "5"]
 			String[] StringArrayContenu = contenuInterne.split(", ");
 			// On batit la suite chainee grace a ce Array
-			premierElement = new ElementSuite(val1Chargee);
+			premierElement = new ElementSuite(Integer.parseInt(StringArrayContenu[0]));
 			for(int i = 1; i < StringArrayContenu.length; i++) {
 				addInterne(new ElementSuite(Integer.parseInt(StringArrayContenu[i])));
 			}
