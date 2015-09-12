@@ -672,11 +672,19 @@ public class SuiteChainee implements ISuiteChainee {
 		}
 	}
 	
-	
+	// Represente la valeur de l'index en memoire.
 	private int indexInterne;
+
+	// Represente l'operateur en memoire.
 	private String operateurInterne;
+
+	// Represente le chemin vers le fichier.
 	private String cheminInterne;
+
+	// Represente le contenu de la suite chainee en memoire.
 	private String contenuInterne;
+
+	// Reference vers le premier element de la suite chainee.
 	private ElementSuite premierElement;
 	
 }
