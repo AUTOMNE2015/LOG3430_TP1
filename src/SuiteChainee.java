@@ -448,6 +448,59 @@ public class SuiteChainee implements ISuiteChainee {
 		return suite;
 		
 	}
+
+	/*
+	* Charge les proprietes du fichier en memoire.
+	*/
+	private void charger(){
+		// Essai d'ouvrir un stream du fichier.
+        Properties properties = new Properties();
+		File file = new File(cheminInterne);
+		FileInputStream fileInput;
+		try 
+		{
+			
+			fileInput = new FileInputStream(file);
+			properties.load(fileInput);
+			
+		} 
+		catch (FileNotFoundException e)
+		{
+			// Fichier introuvable, on va créer un nouveau fichier plus tard.
+			System.out.println("Fichier introuvable.");
+			return;
+		} 
+		catch (IOException e) 
+		{
+			e.printStackTrace();
+			return;
+		}
+		
+		// On charge les properties du fichier (si elles existent)
+		indexInterne = Integer.parseInt(properties.getProperty("index"));
+		contenuInterne = properties.getProperty("contenu");
+		if(contenuInterne == null)
+		{
+			contenuInterne = "";
+		} else {
+			// On reset la suite chainee interne
+			ElementSuite courant = premierElement;
+			ElementSuite suivant;
+			while(courant != null && courant.next() != null)
+			{
+				suivant = courant.next();
+				courant.prochain = null;
+			}
+
+			// On cree un Array contenant les valeurs de contenu. Ex: ["1", "2", "3", "5"]
+			String[] StringArrayContenu = contenuInterne.split(", ");
+			// On batit la suite chainee grace a ce Array
+			premierElement = new ElementSuite(Integer.parseInt(StringArrayContenu[0]));
+			for(int i = 1; i < StringArrayContenu.length; i++) {
+				addInterne(new ElementSuite(Integer.parseInt(StringArrayContenu[i])));
+			}
+		}
+	}
 	
 	/*
 	* Sauvegarde l'etat de la suite dans le fichier.
@@ -617,59 +670,6 @@ public class SuiteChainee implements ISuiteChainee {
 		
 		// Pas besoin de lancer une exception, car l'addition/soustraction le font dÃ©jÃ .
 		return ret;
-	}
-	
-	/*
-	* Charge les proprietes du fichier en memoire.
-	*/
-	private void charger(){
-		// Essai d'ouvrir un stream du fichier.
-        Properties properties = new Properties();
-		File file = new File(cheminInterne);
-		FileInputStream fileInput;
-		try 
-		{
-			
-			fileInput = new FileInputStream(file);
-			properties.load(fileInput);
-			
-		} 
-		catch (FileNotFoundException e)
-		{
-			// Fichier introuvable, on va créer un nouveau fichier plus tard.
-			System.out.println("Fichier introuvable.");
-			return;
-		} 
-		catch (IOException e) 
-		{
-			e.printStackTrace();
-			return;
-		}
-		
-		// On charge les properties du fichier (si elles existent)
-		indexInterne = Integer.parseInt(properties.getProperty("index"));
-		contenuInterne = properties.getProperty("contenu");
-		if(contenuInterne == null)
-		{
-			contenuInterne = "";
-		} else {
-			// On reset la suite chainee interne
-			ElementSuite courant = premierElement;
-			ElementSuite suivant;
-			while(courant != null && courant.next() != null)
-			{
-				suivant = courant.next();
-				courant.prochain = null;
-			}
-
-			// On cree un Array contenant les valeurs de contenu. Ex: ["1", "2", "3", "5"]
-			String[] StringArrayContenu = contenuInterne.split(", ");
-			// On batit la suite chainee grace a ce Array
-			premierElement = new ElementSuite(Integer.parseInt(StringArrayContenu[0]));
-			for(int i = 1; i < StringArrayContenu.length; i++) {
-				addInterne(new ElementSuite(Integer.parseInt(StringArrayContenu[i])));
-			}
-		}
 	}
 	
 	// Represente la valeur de l'index en memoire.
