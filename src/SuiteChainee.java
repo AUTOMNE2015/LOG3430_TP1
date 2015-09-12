@@ -179,7 +179,7 @@ public class SuiteChainee implements ISuiteChainee {
 	@Override
 	public void removeAt(int position) {
 		charger();
-        ElementSuite avant = getAt(position-1);
+        
         ElementSuite courant = getAt(position);
         if (courant == null)
         {
@@ -187,6 +187,7 @@ public class SuiteChainee implements ISuiteChainee {
                 return;
         }
         // On construit un lien entre l'element avant et apres.
+        ElementSuite avant = getAt(position-1);
         if(avant != null)
         {
             avant.prochain = courant.next();
