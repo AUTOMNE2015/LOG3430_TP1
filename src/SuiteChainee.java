@@ -289,6 +289,7 @@ public class SuiteChainee implements ISuiteChainee {
 			suivant = courant.next();
 			courant.prochain = null;
 		}
+		premierElement = null;
 		indexInterne = 0;
 		sauvegarder();
 	}
