@@ -33,6 +33,8 @@ public class SuiteChainee implements ISuiteChainee {
 		// Initialiser les membres de la classe.
 		indexInterne = 0;
 		operateurInterne = operateur;
+		cheminInterne = chemin;
+
 		
 		// Créer les propriétés.
 		Properties properties = new Properties();
@@ -482,9 +484,60 @@ public class SuiteChainee implements ISuiteChainee {
 		return ret;
 	}
 	
+	private void charger(){
+		// Essai d'ouvrir un stream du fichier.
+		File file = new File(cheminInterne);
+		FileInputStream fileInput;
+		try 
+		{
+			
+			fileInput = new FileInputStream(file);
+			properties.load(fileInput);
+			
+		} 
+		catch (FileNotFoundException e)
+		{
+			// Fichier introuvable, on va créer un nouveau fichier plus tard.
+			System.out.println("Fichier introuvable.");
+			return;
+		} 
+		catch (IOException e) 
+		{
+			e.printStackTrace();
+			return;
+		}
+		
+		// On charge les properties du fichier (si elles existent)
+		indexInterne = properties.getProperty("index");
+		contenuInterne = properties.getProperty("contenu");
+		if(contenuInterne == null)
+		{
+			contenuInterne = "";
+		} else {
+			// On reset la suite chainee interne
+			ElementSuite courant = premierElement;
+			ElementSuite suivant;
+			while(courant != null && courant.next() != null)
+			{
+				suivant = courant.next();
+				courant.prochain = null;
+			}
+
+			// On cree un Array contenant les valeurs de contenu. Ex: ["1", "2", "3", "5"]
+			String[] StringArrayContenu = contenuInterne.split(", ");
+			// On batit la suite chainee grace a ce Array
+			premierElement = new ElementSuite(val1Chargee);
+			for(int i = 1; i < StringArrayContenu.length; i++) {
+				addInterne(new ElementSuite(Integer.parseInt(StringArrayContenu[i])));
+			}
+		}
+	}
+	
 	
 	private int indexInterne;
 	private String operateurInterne;
+	private String cheminInterne;
+	private String contenuInterne;
 	private ElementSuite premierElement;
 	
 }
