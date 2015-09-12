@@ -36,7 +36,7 @@ public class SuiteChainee implements ISuiteChainee {
 		cheminInterne = chemin;
 
 		
-		// Créer les propriétés.
+		// Creer les proprietes.
 		Properties properties = new Properties();
 		
 		// Essai d'ouvrir un stream du fichier.
@@ -52,7 +52,7 @@ public class SuiteChainee implements ISuiteChainee {
 		} 
 		catch (FileNotFoundException e)
 		{
-			// Fichier introuvable, on va créer un nouveau fichier plus tard.
+			// Fichier introuvable, on va creer un nouveau fichier plus tard.
 			System.out.println("Fichier introuvable.");
 			nouveauFichier = true;
 		} 
@@ -61,7 +61,7 @@ public class SuiteChainee implements ISuiteChainee {
 			e.printStackTrace();
 		}
 		
-		// Création de la suite.
+		// Creation de la suite.
 		
 		premierElement = new ElementSuite(val1);
 		addInterne(new ElementSuite(val2));
@@ -131,7 +131,7 @@ public class SuiteChainee implements ISuiteChainee {
 		properties.setProperty("index", Integer.toString(indexInterne));
 		properties.setProperty("taille", Integer.toString(taille));
 		
-		// Charge le contenu deja présent.
+		// Charge le contenu deja present.
 		String ancienContenu = properties.getProperty("contenu");
 		if(ancienContenu == null)
 		{
@@ -144,7 +144,7 @@ public class SuiteChainee implements ISuiteChainee {
 			properties.setProperty("contenu", ancienContenu + ", " + toString());
 		}
 		
-		// On écrit dans le fichier spécifié.
+		// On ecrit dans le fichier specifie.
 		FileOutputStream fileOut;
 		try {
 			fileOut = new FileOutputStream(file);
@@ -155,10 +155,13 @@ public class SuiteChainee implements ISuiteChainee {
 		} catch (IOException e) {
 			e.printStackTrace();
 		}
+                
+                charger();
 	}
 
 	@Override
 	public void add(ElementSuite nouvelElement) {
+            charger();
 		addInterne(nouvelElement);
 		sauvegarder();
 	}
@@ -175,7 +178,7 @@ public class SuiteChainee implements ISuiteChainee {
 
 	@Override
 	public void removeAt(int position) {
-		//charger();
+		charger();
         ElementSuite avant = getAt(position-1);
         ElementSuite courant = getAt(position);
         if (courant == null)
@@ -199,8 +202,8 @@ public class SuiteChainee implements ISuiteChainee {
 	}
 
 	@Override
-	public void removeItem(ElementSuite element) {
-		//Charger();
+	public void removeItem(int element) {
+		charger();
         ElementSuite suivant = premierElement;
         int index = 0;
         // On cherche le premier element qui correspond a ce qu'on veut.
@@ -222,8 +225,8 @@ public class SuiteChainee implements ISuiteChainee {
 	}
 
 	@Override
-	public void setAt(ElementSuite nouvelElement, int position) {
-		//Charger();
+	public void setAt(int nouvelElement, int position) {
+		charger();
         // On trouve l'element a la position voulue pour remplacer sa valeur.
         ElementSuite remplace = getAt(position);
         if (remplace == null)
@@ -244,8 +247,8 @@ public class SuiteChainee implements ISuiteChainee {
             System.out.println("Erreur getAt: Element hors de portee");
             return null;
         }
-        
-		//Charger();
+
+		charger();
         ElementSuite suivant = premierElement;
         
         // On parcourt la suite jusqu'a la position voulue.
@@ -263,7 +266,7 @@ public class SuiteChainee implements ISuiteChainee {
 
 	@Override
 	public int getSize() {
-		//Charger();
+		charger();
         int grosseur = 0;
         ElementSuite suivant = premierElement;
         
@@ -277,6 +280,7 @@ public class SuiteChainee implements ISuiteChainee {
 
 	@Override
 	public void reset() {
+            charger();
 		ElementSuite courant = premierElement;
 		ElementSuite suivant;
 
@@ -406,8 +410,46 @@ public class SuiteChainee implements ISuiteChainee {
 	}
 	
 	private void sauvegarder()
-	{
-		// charger, remplacer index, remplacer contenu, fermer
+	{            
+        // On charge le fichier .properties
+        Properties properties = new Properties();
+        // Essai d'ouvrir un stream du fichier.
+        File file = new File(cheminInterne);
+        FileInputStream fileInput;
+        try
+        {
+               
+                fileInput = new FileInputStream(file);
+                properties.load(fileInput);
+               
+        }
+        catch (FileNotFoundException e)
+        {
+                // Fichier introuvable, on va cr�er un nouveau fichier plus tard.
+                System.out.println("Fichier introuvable.");
+                return;
+        }
+        catch (IOException e)
+        {
+                e.printStackTrace();
+                return;
+        }
+       
+        // Remplir le fichier.
+        properties.setProperty("index", Integer.toString(indexInterne));
+        properties.setProperty("contenu", toString());
+       
+        // On �crit dans le fichier sp�cifi�.
+        FileOutputStream fileOut;
+        try {
+                fileOut = new FileOutputStream(file);
+                properties.store(fileOut, "Suite Chainee");
+                fileOut.close();
+        } catch (FileNotFoundException e) {
+                e.printStackTrace();
+        } catch (IOException e) {
+                e.printStackTrace();
+        }
 	}
 	
 	private int addition(int valeur1, int valeur2) throws Exception
