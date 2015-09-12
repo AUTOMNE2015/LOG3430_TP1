@@ -34,7 +34,7 @@ public class SuiteChainee implements ISuiteChainee {
 		indexInterne = 0;
 		operateurInterne = operateur;
 		
-		// Créer les propriétés.
+		// CrÃ©er les propriÃ©tÃ©s.
 		Properties properties = new Properties();
 		
 		// Essai d'ouvrir un stream du fichier.
@@ -50,7 +50,7 @@ public class SuiteChainee implements ISuiteChainee {
 		} 
 		catch (FileNotFoundException e)
 		{
-			// Fichier introuvable, on va créer un nouveau fichier plus tard.
+			// Fichier introuvable, on va crÃ©er un nouveau fichier plus tard.
 			System.out.println("Fichier introuvable.");
 			nouveauFichier = true;
 		} 
@@ -59,7 +59,7 @@ public class SuiteChainee implements ISuiteChainee {
 			e.printStackTrace();
 		}
 		
-		// Création de la suite.
+		// CrÃ©ation de la suite.
 		
 		premierElement = new ElementSuite(val1);
 		addInterne(new ElementSuite(val2));
@@ -112,7 +112,7 @@ public class SuiteChainee implements ISuiteChainee {
 				}
 				break;
 			default:
-				throw new Exception("Opérateur invalide.");
+				throw new Exception("OpÃ©rateur invalide.");
 			}
 		
 		}
@@ -129,7 +129,7 @@ public class SuiteChainee implements ISuiteChainee {
 		properties.setProperty("index", Integer.toString(indexInterne));
 		properties.setProperty("taille", Integer.toString(taille));
 		
-		// Charge le contenu deja présent.
+		// Charge le contenu deja prÃ©sent.
 		String ancienContenu = properties.getProperty("contenu");
 		if(ancienContenu == null)
 		{
@@ -142,7 +142,7 @@ public class SuiteChainee implements ISuiteChainee {
 			properties.setProperty("contenu", ancienContenu + ", " + toString());
 		}
 		
-		// On écrit dans le fichier spécifié.
+		// On Ã©crit dans le fichier spÃ©cifiÃ©.
 		FileOutputStream fileOut;
 		try {
 			fileOut = new FileOutputStream(file);
@@ -173,39 +173,65 @@ public class SuiteChainee implements ISuiteChainee {
 
 	@Override
 	public void removeAt(int position) {
-		// TODO Auto-generated method stub
-		
-		//charger, compter, effacer, sauvegarder
-		indexInterne = position;
-		sauvegarder();
-		
+		//charger();
+        ElementSuite avant = getAt(position-1);
+        ElementSuite courant = getAt(position);
+        if (courant == null)
+        {
+                System.out.println("Erreur removeAt: element hors de portee");
+                return;
+        }
+        // On construit un lien entre l'element avant et apres.
+        if(avant != null)
+        {
+            avant.prochain = courant.next();
+        }
+        // Si c'est le premier element, on remplace le premier element.
+        if(position == 0)
+        {
+            premierElement = courant.next();
+        }
+        courant.prochain = null;
+        indexInterne = position;
+        sauvegarder();
 	}
 
 	@Override
 	public void removeItem(ElementSuite element) {
-		ElementSuite suivant = premierElement;
-		int index = 0;
-		while (suivant != null || suivant != element || suivant.next() != null)
-		{
-			suivant = suivant.next();
-			index++;
-		}
-		if(suivant != null){
-			removeAt(index);
-			indexInterne = index;
-		}
-		sauvegarder();
-		
+		//Charger();
+        ElementSuite suivant = premierElement;
+        int index = 0;
+        // On cherche le premier element qui correspond a ce qu'on veut.
+        while (suivant != null && suivant.valeur != element && suivant.next() != null)
+        {
+            suivant = suivant.next();
+            index++;
+        }
+        // Si on le trouve, on l'efface.
+        if(suivant != null && suivant.valeur == element){
+            removeAt(index);
+            indexInterne = index;
+        }
+        else
+        {
+             System.out.println("Erreur removeItem: Element \""+element+"\" introuvable.");
+        }
+        sauvegarder();
 	}
 
 	@Override
 	public void setAt(ElementSuite nouvelElement, int position) {
-		// TODO Auto-generated method stub
-		
-		//charger le fichier, compter, remplacer, sauvegarder
-		indexInterne = position;
-		sauvegarder();
-		
+		//Charger();
+        // On trouve l'element a la position voulue pour remplacer sa valeur.
+        ElementSuite remplace = getAt(position);
+        if (remplace == null)
+        {
+                System.out.println("Erreur setAt: Element hors de portee");
+                return;
+        }
+        remplace.valeur = nouvelElement;
+        indexInterne = position;
+        sauvegarder();
 	}
 
 	@Override
@@ -257,7 +283,7 @@ public class SuiteChainee implements ISuiteChainee {
 	@Override
 	public boolean isValid() {
 		boolean toutEstCorrecte = true;
-		// La suite n'est pas vérifiable s'il y a 2 élements ou moins.
+		// La suite n'est pas vÃ©rifiable s'il y a 2 Ã©lements ou moins.
 		if(premierElement != null && premierElement.next() != null)
 		{
 			ElementSuite elementTemp1 = premierElement;
@@ -269,7 +295,7 @@ public class SuiteChainee implements ISuiteChainee {
 				case "addition":
 					while(toutEstCorrecte)
 					{
-						// On détermine la prochaine valeur.
+						// On dÃ©termine la prochaine valeur.
 						int prochaineValeur = addition(elementTemp1.valeur, elementTemp2.valeur);
 						// On avance dans la suite.
 						elementTemp1 = elementTemp2;
@@ -277,7 +303,7 @@ public class SuiteChainee implements ISuiteChainee {
 							break;
 						}
 						elementTemp2 = elementTemp2.next();
-						// On vérifie si la nouvelle valeur respecte la règle ou non.
+						// On vÃ©rifie si la nouvelle valeur respecte la rÃ¨gle ou non.
 						if(elementTemp2.valeur != prochaineValeur)
 						{
 							toutEstCorrecte = false;
@@ -287,7 +313,7 @@ public class SuiteChainee implements ISuiteChainee {
 				case "soustraction":
 					while(toutEstCorrecte)
 					{
-						// On détermine la prochaine valeur.
+						// On dÃ©termine la prochaine valeur.
 						int prochaineValeur = soustraction(elementTemp1.valeur, elementTemp2.valeur);
 						// On avance dans la suite.
 						elementTemp1 = elementTemp2;
@@ -295,7 +321,7 @@ public class SuiteChainee implements ISuiteChainee {
 							break;
 						}
 						elementTemp2 = elementTemp2.next();
-						// On vérifie si la nouvelle valeur respecte la règle ou non.
+						// On vÃ©rifie si la nouvelle valeur respecte la rÃ¨gle ou non.
 						if(elementTemp2.valeur != prochaineValeur)
 						{
 							toutEstCorrecte = false;
@@ -305,7 +331,7 @@ public class SuiteChainee implements ISuiteChainee {
 				case "multiplication":
 					while(toutEstCorrecte)
 					{
-						// On détermine la prochaine valeur.
+						// On dÃ©termine la prochaine valeur.
 						int prochaineValeur = multiplication(elementTemp1.valeur, elementTemp2.valeur);
 						// On avance dans la suite.
 						elementTemp1 = elementTemp2;
@@ -313,7 +339,7 @@ public class SuiteChainee implements ISuiteChainee {
 							break;
 						}
 						elementTemp2 = elementTemp2.next();
-						// On vérifie si la nouvelle valeur respecte la règle ou non.
+						// On vÃ©rifie si la nouvelle valeur respecte la rÃ¨gle ou non.
 						if(elementTemp2.valeur != prochaineValeur)
 						{
 							toutEstCorrecte = false;
@@ -323,7 +349,7 @@ public class SuiteChainee implements ISuiteChainee {
 				case "division":
 					while(toutEstCorrecte)
 					{
-						// On détermine la prochaine valeur.
+						// On dÃ©termine la prochaine valeur.
 						int prochaineValeur = division(elementTemp1.valeur, elementTemp2.valeur);
 						// On avance dans la suite.
 						elementTemp1 = elementTemp2;
@@ -331,7 +357,7 @@ public class SuiteChainee implements ISuiteChainee {
 							break;
 						}
 						elementTemp2 = elementTemp2.next();
-						// On vérifie si la nouvelle valeur respecte la règle ou non.
+						// On vÃ©rifie si la nouvelle valeur respecte la rÃ¨gle ou non.
 						if(elementTemp2.valeur != prochaineValeur)
 						{
 							toutEstCorrecte = false;
@@ -340,7 +366,7 @@ public class SuiteChainee implements ISuiteChainee {
 					break;
 				default:
 					System.out.println(operateurInterne);
-					throw new Exception("Opérateur invalide.");
+					throw new Exception("OpÃ©rateur invalide.");
 				}
 			}
 			catch (Exception e)
@@ -449,7 +475,7 @@ public class SuiteChainee implements ISuiteChainee {
 		
 		if((valeur1<0)^(valeur2<0)){ret = soustraction(0, ret);}
 		
-		// Pas besoin de lancer une exception, car l'addition/soustraction le font déjà.
+		// Pas besoin de lancer une exception, car l'addition/soustraction le font dÃ©jÃ .
 		return ret;
 	}
 
@@ -460,7 +486,7 @@ public class SuiteChainee implements ISuiteChainee {
 		}
 		
 		if(valeur2 == 0){
-			throw new Exception("Division par zéro.");
+			throw new Exception("Division par zÃ©ro.");
 		}
 		
 		int ret = 0;
@@ -478,7 +504,7 @@ public class SuiteChainee implements ISuiteChainee {
 		
 		if((valeur1<0)^(valeur2<0)){ret = soustraction(0, ret);}
 		
-		// Pas besoin de lancer une exception, car l'addition/soustraction le font déjà.
+		// Pas besoin de lancer une exception, car l'addition/soustraction le font dÃ©jÃ .
 		return ret;
 	}
 	
