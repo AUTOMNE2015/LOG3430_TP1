@@ -6,28 +6,19 @@ import java.io.IOException;
 import java.util.Properties;
 
 /**
- * 
+ * @author David Binh Quang Tran (1688466) & Charles Tremblay (1687959)
+ * LOG3430 TP1
  */
 
 /**
- * @author datraa
- *
+ *	Classe renpresentant la suite chainee pour le tp1.
  */
-
-// Constructor is done.
-// Reset is done.
-// Add is done.
-// isvalid is done.
-// tostring is done.
-// addition,soustraction, multi, divi are done.
-
-// todo:
-// removeat, removeitem, setat, getat, getsize, sauvegarder
-
-// considerer creer une fonction Charger() qui met a jour le premierElement et l'indexInterne avant les operations.
-
 public class SuiteChainee implements ISuiteChainee {
-	
+
+    /*
+    * Constructeur definissant l'operateur, les deux premieres valeurs et la
+    * taille de la suite chainee.
+    */
 	public SuiteChainee(String chemin, String operateur, int val1, int val2, int taille, boolean estVide)
 	{
 		// Initialiser les membres de la classe.
@@ -159,6 +150,9 @@ public class SuiteChainee implements ISuiteChainee {
                 charger();
 	}
 
+    /*
+    * Appeler cette méthode lorsqu’il est désirable d’ajouter un élément à la fin de la suite chaînée.
+    */
 	@Override
 	public void add(ElementSuite nouvelElement) {
             charger();
@@ -166,6 +160,9 @@ public class SuiteChainee implements ISuiteChainee {
 		sauvegarder();
 	}
 	
+    /*
+    * Implementation interne de add.
+    */
 	private void addInterne(ElementSuite nouvelElement) {
 		if(premierElement == null)
 		{
@@ -176,6 +173,11 @@ public class SuiteChainee implements ISuiteChainee {
 		}
 	}
 
+    /*
+    * Appeler cette méthode pour supprimer l’élément d’une suite chaînée à
+    * l’index « position » désiré. Dans le cas où « position » est plus 
+    * grand que la taille de la suite chaînée, rien ne se passera.
+    */
 	@Override
 	public void removeAt(int position) {
 		charger();
@@ -202,6 +204,13 @@ public class SuiteChainee implements ISuiteChainee {
         sauvegarder();
 	}
 
+    /*
+    * Appeler cette méthode lorsqu’il faut supprimer l’élément avec la valeur
+    * « element »  de la suite chaînée. Dans le cas où « element » est 
+    * présent multiples fois dans la suite chaînée, alors la première 
+    * instance d’ « element » sera supprimée et les suivantes seront 
+    * intactes.
+    */
 	@Override
 	public void removeItem(int element) {
 		charger();
@@ -225,6 +234,12 @@ public class SuiteChainee implements ISuiteChainee {
         sauvegarder();
 	}
 
+    /*
+    * Appeler cette méthode pour modifier un élément d’une suite chaînée à 
+    * l’index « position » en écrasant l’élément courant avec la valeur 
+    * « nouvelElement ». Dans le cas où « position » est plus grand que la
+    * taille de la suite chaînée, rien ne se passera.
+    */
 	@Override
 	public void setAt(int nouvelElement, int position) {
 		charger();
@@ -240,6 +255,11 @@ public class SuiteChainee implements ISuiteChainee {
         sauvegarder();
 	}
 
+    /*
+    * Appeler cette méthode pour obtenir l’élément d’une suite chaînée à 
+    * l’index « position » désiré. Dans le cas où « position » est plus 
+    * grand que la taille de la suite chaînée, la méthode retournera null.
+    */
 	@Override
 	public ElementSuite getAt(int position) {
 
@@ -265,6 +285,9 @@ public class SuiteChainee implements ISuiteChainee {
         return suivant;
 	}
 
+    /*
+    * Appeler cette méthode pour obtenir la grandeur de la suite chaînée.
+    */
 	@Override
 	public int getSize() {
 		charger();
@@ -279,6 +302,10 @@ public class SuiteChainee implements ISuiteChainee {
         return grosseur;
 	}
 
+    /*
+    * Appeler cette méthode pour réinitialiser la suite chaînée.
+    * Elle n’aura pas d’éléments.
+    */
 	@Override
 	public void reset() {
             charger();
@@ -295,6 +322,12 @@ public class SuiteChainee implements ISuiteChainee {
 		sauvegarder();
 	}
 
+    /*
+    * Appeler cette méthode afin de vérifier si la suite chaînée courante 
+    * est valide (i.e. que les valeurs sont cohérentes avec l’opérateur 
+    * assigné. Si la suite est valide, la valeur retournée sera true. 
+    * Sinon, la valeur retournée sera false.
+    */
 	@Override
 	public boolean isValid() {
 		boolean toutEstCorrecte = true;
@@ -393,6 +426,11 @@ public class SuiteChainee implements ISuiteChainee {
 		return toutEstCorrecte;
 	}
 	
+    /*
+    * Appeler cette méthode afin d’obtenir une chaîne de caractères 
+    * représentant les valeurs de la suite chaînée dans le bon ordre. 
+    * Par exemple : « 0, 1, 1, 2 ».
+    */
 	public String toString(){
 		String suite = "";
 		ElementSuite prochain = premierElement;
@@ -411,6 +449,9 @@ public class SuiteChainee implements ISuiteChainee {
 		
 	}
 	
+	/*
+	* Sauvegarde l'etat de la suite dans le fichier.
+	*/
 	private void sauvegarder()
 	{            
         // On charge le fichier .properties
@@ -454,6 +495,10 @@ public class SuiteChainee implements ISuiteChainee {
         }
 	}
 	
+    /*
+    * Appeler cette méthode afin d’obtenir la somme de valeur1 et de valeur2
+    * (valeur1 + valeur2).
+    */
 	private int addition(int valeur1, int valeur2) throws Exception
 	{
 		float tampon1 = valeur1;
@@ -482,7 +527,11 @@ public class SuiteChainee implements ISuiteChainee {
 		
 		return (int) tampon1;
 	}
-
+        
+    /*
+    * Appeler cette méthode afin d’obtenir la différence de valeur1 et 
+    * de valeur2 (valeur1 - valeur2).
+    */
 	private int soustraction(int valeur1, int valeur2) throws Exception
 	{
 		float tampon1 = valeur1;
@@ -512,6 +561,10 @@ public class SuiteChainee implements ISuiteChainee {
 		return (int) tampon1;
 	}
 
+    /*
+    * Appeler cette méthode afin d’obtenir le produit de valeur1 et de 
+    * valeur2 (valeur1 * valeur2).
+    */
 	private int multiplication(int valeur1, int valeur2) throws Exception
 	{
 		int ret = 0;
@@ -532,6 +585,11 @@ public class SuiteChainee implements ISuiteChainee {
 		return ret;
 	}
 
+    /*
+    * Appeler cette méthode afin d’obtenir le quotient de valeur1 et de 
+    * valeur2 (valeur1 / valeur2). Dans le cas d’une division par zéro,
+    * la suite chaînée ne sera pas complétée.
+    */
 	private int division(int valeur1, int valeur2) throws Exception
 	{
 		if(valeur1 == 0){
@@ -561,6 +619,9 @@ public class SuiteChainee implements ISuiteChainee {
 		return ret;
 	}
 	
+	/*
+	* Charge les proprietes du fichier en memoire.
+	*/
 	private void charger(){
 		// Essai d'ouvrir un stream du fichier.
         Properties properties = new Properties();
