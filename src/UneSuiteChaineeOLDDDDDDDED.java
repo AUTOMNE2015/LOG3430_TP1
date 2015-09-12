@@ -13,6 +13,8 @@ import java.util.Properties;
  * @author datraa
  *
  */
+
+/*
 public class SuiteChainee implements ISuiteChainee {
 	
 	public SuiteChainee(String chemin, String operateur, int val1, int val2, int taille, boolean estVide)
@@ -526,3 +528,5 @@ public class SuiteChainee implements ISuiteChainee {
 	private String ancienContenu;
 	private boolean estVideInterne;
 }
+
+*/
