@@ -210,18 +210,34 @@ public class SuiteChainee implements ISuiteChainee {
 
 	@Override
 	public ElementSuite getAt(int position) {
-		// TODO Auto-generated method stub
-		
-		//charger le fichier, compter, return
-		return null;
+		//Charger();
+        ElementSuite suivant = premierElement;
+        
+        // On parcourt la suite jusqu'a la position voulue.
+        for (int i = 0; i < position; i++){
+            if (suivant == null)
+            {
+                System.out.println("Erreur getAt: Element hors de portee");
+                return null;
+            }
+            suivant = suivant.next();
+        }
+
+        return suivant;
 	}
 
 	@Override
 	public int getSize() {
-		// TODO Auto-generated method stub
-		
-		//charger le fichier, compter, return
-		return 0;
+		//Charger();
+        int grosseur = 0;
+        ElementSuite suivant = premierElement;
+        
+        // On itere dans la suite en comptant.
+        while(suivant != null){
+            grosseur++;  
+            suivant = suivant.next();
+        }
+        return grosseur;
 	}
 
 	@Override
