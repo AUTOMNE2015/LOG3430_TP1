@@ -19,7 +19,7 @@ public class SuiteChainee implements ISuiteChainee {
     * Constructeur definissant l'operateur, les deux premieres valeurs et la
     * taille de la suite chainee.
     */
-	public SuiteChainee(String chemin, String operateur, int val1, int val2, int taille, boolean estVide)
+	public SuiteChainee(String chemin, String operateur, int val1, int val2, int taille, boolean estVide) throws Exception
 	{
 		// Initialiser les membres de la classe.
 		
@@ -35,84 +35,72 @@ public class SuiteChainee implements ISuiteChainee {
 		// Essai d'ouvrir un stream du fichier.
 		File file = new File(chemin);
 		FileInputStream fileInput;
-		try 
-		{
-			
-			fileInput = new FileInputStream(file);
-			properties.load(fileInput);
-			
-		} 
-		catch (FileNotFoundException e)
-		{
-			// Fichier introuvable, on va creer un nouveau fichier plus tard.
-			System.out.println("Fichier introuvable.");
-		} 
-		catch (IOException e) 
-		{
-			e.printStackTrace();
-		}
 		
+		fileInput = new FileInputStream(file);
+		properties.load(fileInput);
+			
 		// Creation de la suite.
 		
-		listeInterne.setPremierElement(new ElementSuite(val1));
-		listeInterne.add(new ElementSuite(val2));
+		if(taille >= 1)
+		{
+			listeInterne.setPremierElement(new ElementSuite(val1));
+		}
+		if(taille >= 2)
+		{
+			listeInterne.add(new ElementSuite(val2));
+		}
 		
 		int valeurCourante1 = val1;
 		int valeurCourante2 = val2;
 		
-		try
-		{
-			if(taille > 10){
-				throw new Exception("Taille excedant 10.");
-			}
-			
-			// Puisque l'element #1 et l'element #2 sont deja dans la suite chainee, on commence a i=2
-			switch(operateur){
-			case "addition":
-				for (int i = 2; i < taille; i++){
-					int tampon = valeurCourante2;
-					valeurCourante2 = calculatrice.addition(valeurCourante1, valeurCourante2);
-					valeurCourante1 = tampon;
-					
-					listeInterne.add(new ElementSuite(valeurCourante2));
-				}
-				break;
-			case "soustraction":
-				for (int i = 2; i < taille; i++){
-					int tampon = valeurCourante2;
-					valeurCourante2 = calculatrice.soustraction(valeurCourante1, valeurCourante2);
-					valeurCourante1 = tampon;
-					
-					listeInterne.add(new ElementSuite(valeurCourante2));
-				}
-				break;
-			case "multiplication":
-				for (int i = 2; i < taille; i++){
-					int tampon = valeurCourante2;
-					valeurCourante2 = calculatrice.multiplication(valeurCourante1, valeurCourante2);
-					valeurCourante1 = tampon;
-					
-					listeInterne.add(new ElementSuite(valeurCourante2));
-				}
-				break;
-			case "division":
-				for (int i = 2; i < taille; i++){
-					int tampon = valeurCourante2;
-					valeurCourante2 = calculatrice.division(valeurCourante1, valeurCourante2);
-					valeurCourante1 = tampon;
-					
-					listeInterne.add(new ElementSuite(valeurCourante2));
-				}
-				break;
-			default:
-				throw new Exception("Opérateur invalide.");
-			}
-		
+		if(taille < 0){
+			throw new Exception("Taille negative.");
 		}
-		catch (Exception e)
-		{
-			System.out.println(e.getMessage());
-			return;
+		
+		if(taille > 10){
+			throw new Exception("Taille excedant 10.");
+		}
+		
+		// Puisque l'element #1 et l'element #2 sont deja dans la suite chainee, on commence a i=2
+		switch(operateur){
+		case "addition":
+			for (int i = 2; i < taille; i++){
+				int tampon = valeurCourante2;
+				valeurCourante2 = calculatrice.addition(valeurCourante1, valeurCourante2);
+				valeurCourante1 = tampon;
+				
+				listeInterne.add(new ElementSuite(valeurCourante2));
+			}
+			break;
+		case "soustraction":
+			for (int i = 2; i < taille; i++){
+				int tampon = valeurCourante2;
+				valeurCourante2 = calculatrice.soustraction(valeurCourante1, valeurCourante2);
+				valeurCourante1 = tampon;
+				
+				listeInterne.add(new ElementSuite(valeurCourante2));
+			}
+			break;
+		case "multiplication":
+			for (int i = 2; i < taille; i++){
+				int tampon = valeurCourante2;
+				valeurCourante2 = calculatrice.multiplication(valeurCourante1, valeurCourante2);
+				valeurCourante1 = tampon;
+				
+				listeInterne.add(new ElementSuite(valeurCourante2));
+			}
+			break;
+		case "division":
+			for (int i = 2; i < taille; i++){
+				int tampon = valeurCourante2;
+				valeurCourante2 = calculatrice.division(valeurCourante1, valeurCourante2);
+				valeurCourante1 = tampon;
+				
+				listeInterne.add(new ElementSuite(valeurCourante2));
+			}
+			break;
+		default:
+			throw new Exception("Opérateur invalide.");
 		}
 		
 		// Remplir le fichier.
@@ -137,17 +125,12 @@ public class SuiteChainee implements ISuiteChainee {
 		
 		// On ecrit dans le fichier specifie.
 		FileOutputStream fileOut;
-		try {
-			fileOut = new FileOutputStream(file);
-			properties.store(fileOut, "Suite Chainee");
-			fileOut.close();
-		} catch (FileNotFoundException e) {
-			e.printStackTrace();
-		} catch (IOException e) {
-			e.printStackTrace();
-		}
-                
-                charger();
+
+		fileOut = new FileOutputStream(file);
+		properties.store(fileOut, "Suite Chainee");
+		fileOut.close();
+      
+        charger();
 	}
 
     /*
@@ -306,7 +289,7 @@ public class SuiteChainee implements ISuiteChainee {
 		// On charge les properties du fichier (si elles existent)
 		listeInterne.setIndexInterne(Integer.parseInt(properties.getProperty("index")));
 		contenuInterne = properties.getProperty("contenu");
-		if(contenuInterne == null)
+		if(contenuInterne == null || contenuInterne.isEmpty())
 		{
 			contenuInterne = "";
 		} else {
