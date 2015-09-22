@@ -29,6 +29,11 @@ public class SuiteChainee implements ISuiteChainee {
 		listeInterne = new MaListe();
 		listeInterne.setIndexInterne(0);
 		
+		if(estVide)
+		{
+			reset();
+		}
+		
 		// Creer les proprietes.
 		Properties properties = new Properties();
 		
@@ -117,7 +122,7 @@ public class SuiteChainee implements ISuiteChainee {
 			ancienContenu = "";
 		}
 		
-		if(estVide || ancienContenu == ""){
+		if(estVide || ancienContenu.isEmpty()){
 		properties.setProperty("contenu", toString());
 		} else {
 			properties.setProperty("contenu", ancienContenu + ", " + toString());
