@@ -1,5 +1,11 @@
 import static org.junit.Assert.*;
 
+import java.io.File;
+import java.io.FileInputStream;
+import java.io.FileNotFoundException;
+import java.io.IOException;
+import java.util.Properties;
+
 import org.junit.AfterClass;
 import org.junit.BeforeClass;
 import org.junit.Test;
@@ -13,6 +19,36 @@ public class TestAC {
 
 	@AfterClass
 	public static void tearDownAfterClass() throws Exception {
+	}
+	
+	private String loadOldContent(String filename){
+		// Essai d'ouvrir un stream du fichier.
+        Properties properties = new Properties();
+		File file = new File(filename);
+		FileInputStream fileInput;
+		try 
+		{	
+			fileInput = new FileInputStream(file);
+			properties.load(fileInput);
+		} 
+		catch (FileNotFoundException e)
+		{
+			// Fichier introuvable, on va créer un nouveau fichier plus tard.
+			System.out.println("Fichier introuvable.");
+			return null;
+		} 
+		catch (IOException e) 
+		{
+			e.printStackTrace();
+			return null;
+		}
+		String oldContent = properties.getProperty("contenu");
+		if(!(oldContent == null || oldContent.isEmpty()))
+		{
+			oldContent += ", ";
+		}
+
+		return oldContent;
 	}
 
 	@Test
@@ -30,6 +66,7 @@ public class TestAC {
 	public void testAC2() {
 		ISuiteChainee suite;
 		try {
+			String vieuxContenu = loadOldContent("testac2.properties");
 			suite = new SuiteChainee("testac2.properties", "addition", 10, 2, 0, false);
 			assertTrue(suite.isValid());
 		} catch (Exception e) {
@@ -357,5 +394,35 @@ public class TestAC {
 		ISuiteChainee suite;
 		suite = new SuiteChainee("testac32.properties", "division", 10, 2, 5, false);
 
+	}
+	
+	private String loadOldContent(String filename){
+		// Essai d'ouvrir un stream du fichier.
+        Properties properties = new Properties();
+		File file = new File(filename);
+		FileInputStream fileInput;
+		try 
+		{	
+			fileInput = new FileInputStream(file);
+			properties.load(fileInput);
+		} 
+		catch (FileNotFoundException e)
+		{
+			// Fichier introuvable, on va créer un nouveau fichier plus tard.
+			System.out.println("Fichier introuvable.");
+			return null;
+		} 
+		catch (IOException e) 
+		{
+			e.printStackTrace();
+			return null;
+		}
+		String oldContent = properties.getProperty("contenu");
+		if(!(oldContent == null || oldContent.isEmpty()))
+		{
+			oldContent += ", ";
+		}
+
+		return oldContent;
 	}
 }
