@@ -70,7 +70,7 @@ public class TestEC {
 	
 	@Test (expected = Exception.class)
 	public void testEC4() throws Exception {
-		ISuiteChainee suite = new SuiteChainee("testec4.properties", "division", 20, 2, 15, true);		
+		ISuiteChainee suite = new SuiteChainee("testec4.properties", "division", 20, 0, 15, true);		
 	}
 	
 	@Test(expected = Exception.class)
