@@ -21,36 +21,6 @@ public class TestAC {
 	public static void tearDownAfterClass() throws Exception {
 	}
 	
-	private String loadOldContent(String filename){
-		// Essai d'ouvrir un stream du fichier.
-        Properties properties = new Properties();
-		File file = new File(filename);
-		FileInputStream fileInput;
-		try 
-		{	
-			fileInput = new FileInputStream(file);
-			properties.load(fileInput);
-		} 
-		catch (FileNotFoundException e)
-		{
-			// Fichier introuvable, on va créer un nouveau fichier plus tard.
-			System.out.println("Fichier introuvable.");
-			return null;
-		} 
-		catch (IOException e) 
-		{
-			e.printStackTrace();
-			return null;
-		}
-		String oldContent = properties.getProperty("contenu");
-		if(!(oldContent == null || oldContent.isEmpty()))
-		{
-			oldContent += ", ";
-		}
-
-		return oldContent;
-	}
-
 	@Test
 	public void testAC1() {
 		ISuiteChainee suite;
