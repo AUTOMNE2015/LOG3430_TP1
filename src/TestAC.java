@@ -61,7 +61,7 @@ public class TestAC {
 		try {
 			String vieuxContenu = loadOldContent("testac4.properties");
 			suite = new SuiteChainee("testac4.properties", "addition", 10, 2, 1, false);
-			assertTrue(!suite.toString().equals(vieuxContenu+"10"));
+			assertTrue(suite.toString().equals(vieuxContenu+"10"));
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
@@ -84,7 +84,7 @@ public class TestAC {
 		try {
 			String vieuxContenu = loadOldContent("testac6.properties");
 			suite = new SuiteChainee("testac6.properties", "addition", 10, 2, 2, false);
-			assertTrue(!suite.toString().equals(vieuxContenu+"10, 2"));
+			assertTrue(suite.toString().equals(vieuxContenu+"10, 2"));
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
@@ -107,7 +107,7 @@ public class TestAC {
 		try {
 			String vieuxContenu = loadOldContent("testac8.properties");
 			suite = new SuiteChainee("testac8.properties", "addition", 10, 2, 5, false);
-			assertTrue(!suite.toString().equals(vieuxContenu+"10, 2, 12, 14, 26"));
+			assertTrue(suite.toString().equals(vieuxContenu+"10, 2, 12, 14, 26"));
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
@@ -153,7 +153,7 @@ public class TestAC {
 		try {
 			String vieuxContenu = loadOldContent("testac12.properties");
 			suite = new SuiteChainee("testac12.properties", "soustraction", 10, 2, 1, false);
-			assertTrue(!suite.toString().equals(vieuxContenu+"10"));
+			assertTrue(suite.toString().equals(vieuxContenu+"10"));
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
@@ -176,7 +176,7 @@ public class TestAC {
 		try {
 			String vieuxContenu = loadOldContent("testac14.properties");
 			suite = new SuiteChainee("testac14.properties", "soustraction", 10, 2, 2, false);
-			assertTrue(!suite.toString().equals(vieuxContenu+"10, 2"));
+			assertTrue(suite.toString().equals(vieuxContenu+"10, 2"));
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
@@ -199,7 +199,7 @@ public class TestAC {
 		try {
 			String vieuxContenu = loadOldContent("testac16.properties");
 			suite = new SuiteChainee("testac16.properties", "soustraction", 10, 2, 5, false);
-			assertTrue(!suite.toString().equals(vieuxContenu+"10, 2, 8, -6, 14"));
+			assertTrue(suite.toString().equals(vieuxContenu+"10, 2, 8, -6, 14"));
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
@@ -245,7 +245,7 @@ public class TestAC {
 		try {
 			String vieuxContenu = loadOldContent("testac20.properties");
 			suite = new SuiteChainee("testac20.properties", "multiplication", 10, 2, 1, false);
-			assertTrue(!suite.toString().equals(vieuxContenu+"10"));
+			assertTrue(suite.toString().equals(vieuxContenu+"10"));
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
@@ -268,7 +268,7 @@ public class TestAC {
 		try {
 			String vieuxContenu = loadOldContent("testac22.properties");
 			suite = new SuiteChainee("testac22.properties", "multiplication", 10, 2, 2, false);
-			assertTrue(!suite.toString().equals(vieuxContenu+"10, 2"));
+			assertTrue(suite.toString().equals(vieuxContenu+"10, 2"));
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
@@ -291,7 +291,7 @@ public class TestAC {
 		try {
 			String vieuxContenu = loadOldContent("testac24.properties");
 			suite = new SuiteChainee("testac24.properties", "multiplication", 10, 2, 5, false);
-			assertTrue(!suite.toString().equals(vieuxContenu+"10, 2, 20, 40, 800"));
+			assertTrue(suite.toString().equals(vieuxContenu+"10, 2, 20, 40, 800"));
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
@@ -337,7 +337,7 @@ public class TestAC {
 		try {
 			String vieuxContenu = loadOldContent("testac28.properties");
 			suite = new SuiteChainee("testac28.properties", "division", 10, 2, 1, false);
-			assertTrue(!suite.toString().equals(vieuxContenu+"10"));
+			assertTrue(suite.toString().equals(vieuxContenu+"10"));
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
@@ -360,7 +360,7 @@ public class TestAC {
 		try {
 			String vieuxContenu = loadOldContent("testac30.properties");
 			suite = new SuiteChainee("testac30.properties", "division", 10, 2, 2, false);
-			assertTrue(!suite.toString().equals(vieuxContenu+"10, 2"));
+			assertTrue(suite.toString().equals(vieuxContenu+"10, 2"));
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
