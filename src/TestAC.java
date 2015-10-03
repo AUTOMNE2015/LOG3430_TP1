@@ -380,6 +380,365 @@ public class TestAC {
 
 	}
 	
+	@Test
+	public void testAC33() {
+		ISuiteChainee suite;
+		try {
+			suite = new SuiteChainee("testac33.properties", "addition", 10, 0, 0, true);
+			assertTrue(suite.toString().equals(""));
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+	}
+	
+	@Test
+	public void testAC34() {
+		ISuiteChainee suite;
+		try {
+			String vieuxContenu = loadOldContent("testac34.properties");
+			suite = new SuiteChainee("testac34.properties", "addition", 10, 0, 0, false);
+			assertTrue(suite.toString().equals(vieuxContenu+""));
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+	}
+
+	@Test
+	public void testAC35() {
+		ISuiteChainee suite;
+		try {
+			suite = new SuiteChainee("testac35.properties", "addition", 10, 0, 1, true);
+			assertTrue(suite.toString().equals("10"));
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+	}
+	
+	@Test
+	public void testAC36() {
+		ISuiteChainee suite;
+		try {
+			String vieuxContenu = loadOldContent("testac36.properties");
+			suite = new SuiteChainee("testac36.properties", "addition", 10, 0, 1, false);
+			assertTrue(suite.toString().equals(vieuxContenu+"10"));
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+	}
+	
+	@Test
+	public void testAC37() {
+		ISuiteChainee suite;
+		try {
+			suite = new SuiteChainee("testac37.properties", "addition", 10, 0, 2, true);
+			assertTrue(suite.toString().equals("10, 0"));
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+	}
+	
+	@Test
+	public void testAC38() {
+		ISuiteChainee suite;
+		try {
+			String vieuxContenu = loadOldContent("testac38.properties");
+			suite = new SuiteChainee("testac38.properties", "addition", 10, 0, 2, false);
+			assertTrue(suite.toString().equals(vieuxContenu+"10, 0"));
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+	}
+	
+	@Test
+	public void testAC39() {
+		ISuiteChainee suite;
+		try {
+			suite = new SuiteChainee("testac39.properties", "addition", 10, 0, 5, true);
+			assertTrue(suite.toString().equals("10, 0, 10, 10, 20"));
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+	}
+	
+	@Test
+	public void testAC40() {
+		ISuiteChainee suite;
+		try {
+			String vieuxContenu = loadOldContent("testac40.properties");
+			suite = new SuiteChainee("testac40.properties", "addition", 10, 0, 5, false);
+			assertTrue(suite.toString().equals(vieuxContenu+"10, 0, 10, 10, 20"));
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+	}
+	
+	@Test
+	public void testAC41() {
+		ISuiteChainee suite;
+		try {
+			suite = new SuiteChainee("testac41.properties", "soustraction", 10, 0, 0, true);
+			assertTrue(suite.toString().equals(""));
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+	}
+	
+	@Test
+	public void testAC42() {
+		ISuiteChainee suite;
+		try {
+			String vieuxContenu = loadOldContent("testac42.properties");
+			suite = new SuiteChainee("testac42.properties", "soustraction", 10, 0, 0, false);
+			assertTrue(suite.toString().equals(vieuxContenu+""));
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+	}
+
+	@Test
+	public void testAC43() {
+		ISuiteChainee suite;
+		try {
+			suite = new SuiteChainee("testac43.properties", "soustraction", 10, 0, 1, true);
+			assertTrue(suite.toString().equals("10"));
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+	}
+	
+	@Test
+	public void testAC44() {
+		ISuiteChainee suite;
+		try {
+			String vieuxContenu = loadOldContent("testac44.properties");
+			suite = new SuiteChainee("testac44.properties", "soustraction", 10, 0, 1, false);
+			assertTrue(suite.toString().equals(vieuxContenu+"10"));
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+	}
+	
+	@Test
+	public void testAC45() {
+		ISuiteChainee suite;
+		try {
+			suite = new SuiteChainee("testac45.properties", "soustraction", 10, 0, 2, true);
+			assertTrue(suite.toString().equals("10, 0"));
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+	}
+	
+	@Test
+	public void testAC46() {
+		ISuiteChainee suite;
+		try {
+			String vieuxContenu = loadOldContent("testac46.properties");
+			suite = new SuiteChainee("testac46.properties", "soustraction", 10, 0, 2, false);
+			assertTrue(suite.toString().equals(vieuxContenu+"10, 0"));
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+	}
+	
+	@Test
+	public void testAC47() {
+		ISuiteChainee suite;
+		try {
+			suite = new SuiteChainee("testac47.properties", "soustraction", 10, 0, 5, true);
+			assertTrue(suite.toString().equals("10, 0, 10, -10, 20"));
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+	}
+	
+	@Test
+	public void testAC48() {
+		ISuiteChainee suite;
+		try {
+			String vieuxContenu = loadOldContent("testac48.properties");
+			suite = new SuiteChainee("testac48.properties", "soustraction", 10, 0, 5, false);
+			assertTrue(suite.toString().equals(vieuxContenu+"10, 0, 10, -10, 20"));
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+	}
+	
+	@Test
+	public void testAC49() {
+		ISuiteChainee suite;
+		try {
+			suite = new SuiteChainee("testac49.properties", "multiplication", 10, 0, 0, true);
+			assertTrue(suite.toString().equals(""));
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+	}
+	
+	@Test
+	public void testAC50() {
+		ISuiteChainee suite;
+		try {
+			String vieuxContenu = loadOldContent("testac50.properties");
+			suite = new SuiteChainee("testac50.properties", "multiplication", 10, 0, 0, false);
+			assertTrue(suite.toString().equals(vieuxContenu+""));
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+	}
+
+	@Test
+	public void testAC51() {
+		ISuiteChainee suite;
+		try {
+			suite = new SuiteChainee("testac51.properties", "multiplication", 10, 0, 1, true);
+			assertTrue(suite.toString().equals("10"));
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+	}
+	
+	@Test
+	public void testAC52() {
+		ISuiteChainee suite;
+		try {
+			String vieuxContenu = loadOldContent("testac52.properties");
+			suite = new SuiteChainee("testac52.properties", "multiplication", 10, 0, 1, false);
+			assertTrue(suite.toString().equals(vieuxContenu+"10"));
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+	}
+	
+	@Test
+	public void testAC53() {
+		ISuiteChainee suite;
+		try {
+			suite = new SuiteChainee("testac53.properties", "multiplication", 10, 0, 2, true);
+			assertTrue(suite.toString().equals("10, 0"));
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+	}
+	
+	@Test
+	public void testAC54() {
+		ISuiteChainee suite;
+		try {
+			String vieuxContenu = loadOldContent("testac54.properties");
+			suite = new SuiteChainee("testac54.properties", "multiplication", 10, 0, 2, false);
+			assertTrue(suite.toString().equals(vieuxContenu+"10, 0"));
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+	}
+	
+	@Test
+	public void testAC55() {
+		ISuiteChainee suite;
+		try {
+			suite = new SuiteChainee("testac55.properties", "multiplication", 10, 0, 5, true);
+			assertTrue(suite.toString().equals("10, 0, 0, 0, 0"));
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+	}
+	
+	@Test
+	public void testAC56() {
+		ISuiteChainee suite;
+		try {
+			String vieuxContenu = loadOldContent("testac56.properties");
+			suite = new SuiteChainee("testac56.properties", "multiplication", 10, 0, 5, false);
+			assertTrue(suite.toString().equals(vieuxContenu+"10, 0, 0, 0, 0"));
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+	}
+	
+	@Test
+	public void testAC57() {
+		ISuiteChainee suite;
+		try {
+			suite = new SuiteChainee("testac57.properties", "division", 10, 0, 0, true);
+			assertTrue(suite.toString().equals(""));
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+	}
+	
+	@Test
+	public void testAC58() {
+		ISuiteChainee suite;
+		try {
+			String vieuxContenu = loadOldContent("testac58.properties");
+			suite = new SuiteChainee("testac58.properties", "division", 10, 0, 0, false);
+			assertTrue(suite.toString().equals(vieuxContenu+""));
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+	}
+
+	@Test
+	public void testAC59() {
+		ISuiteChainee suite;
+		try {
+			suite = new SuiteChainee("testac59.properties", "division", 10, 0, 1, true);
+			assertTrue(suite.toString().equals("10"));
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+	}
+	
+	@Test
+	public void testAC60() {
+		ISuiteChainee suite;
+		try {
+			String vieuxContenu = loadOldContent("testac60.properties");
+			suite = new SuiteChainee("testac60.properties", "division", 10, 0, 1, false);
+			assertTrue(suite.toString().equals(vieuxContenu+"10"));
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+	}
+	
+	@Test
+	public void testAC61() {
+		ISuiteChainee suite;
+		try {
+			suite = new SuiteChainee("testac61.properties", "division", 10, 0, 2, true);
+			assertTrue(suite.toString().equals("10, 0"));
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+	}
+	
+	@Test
+	public void testAC62() {
+		ISuiteChainee suite;
+		try {
+			String vieuxContenu = loadOldContent("testac62.properties");
+			suite = new SuiteChainee("testac62.properties", "division", 10, 0, 2, false);
+			assertTrue(suite.toString().equals(vieuxContenu+"10, 0"));
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+	}
+	
+	@Test(expected = Exception.class)
+	public void testAC63() throws Exception {
+		ISuiteChainee suite;
+		suite = new SuiteChainee("testac63.properties", "division", 10, 0, 5, true);
+
+	}
+	
+	@Test (expected = Exception.class)
+	public void testAC64() throws Exception {
+		ISuiteChainee suite;
+		suite = new SuiteChainee("testac64.properties", "division", 10, 0, 5, false);
+
+	}
+	
 	private String loadOldContent(String filename){
 		// Essai d'ouvrir un stream du fichier.
         Properties properties = new Properties();
