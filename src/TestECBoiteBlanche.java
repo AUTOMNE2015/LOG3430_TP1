@@ -18,7 +18,7 @@ import org.junit.Test;
  * @author datraa
  *
  */
-public class TestEC {
+public class TestECBoiteBlanche {
 
 
 	@BeforeClass
@@ -37,8 +37,8 @@ public class TestEC {
 	public void testEC1() {
 		ISuiteChainee suite;
 		try {
-			suite = new SuiteChainee("testec1.properties", "addition", 1, 2, 1, true);
-			assertTrue("testEC1 : La liste n'est pas valide.", suite.toString().equals("1"));
+			suite = new SuiteChainee("testec1.properties", "addition", 1, 2, 5, true);
+			assertTrue("testEC1 : La liste n'est pas valide.", suite.toString().equals("1, 2, 3, 5, 8"));
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
@@ -48,8 +48,8 @@ public class TestEC {
 	@Test
 	public void testEC2() {
 		try{
-		ISuiteChainee suite = new SuiteChainee("testec2.properties", "soustraction", 2, 1, 2, true);
-		assertTrue("testEC2 : La liste n'est pas valide.", suite.toString().equals("2, 1"));
+		ISuiteChainee suite = new SuiteChainee("testec2.properties", "soustraction", 2, 1, 5, true);
+		assertTrue("testEC2 : La liste n'est pas valide.", suite.toString().equals("2, 1, 1, 0, 1"));
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
@@ -76,6 +76,22 @@ public class TestEC {
 	@Test(expected = Exception.class)
 	public void testEC5() throws Exception {
 		ISuiteChainee suite = new SuiteChainee("", "jenesuispasunoperateur", 1, 2, 0, true);
+	}
+	
+	
+	@Test
+	public void testEC6() throws Exception {
+		ISuiteChainee suite = new SuiteChainee("testec6.properties", "division", 20, 5, 3, true);		
+	}
+	
+	@Test(expected = Exception.class)
+	public void testEC7() throws Exception {
+		ISuiteChainee suite = new SuiteChainee("testec7.properties", "jenesuispasunoperateur", 1, 2, 5, true);
+	}
+	
+	@Test(expected = Exception.class)
+	public void testEC8() throws Exception {
+		ISuiteChainee suite = new SuiteChainee("testec8.properties", "addition", 1, 2, -1, true);
 	}
 	
 	

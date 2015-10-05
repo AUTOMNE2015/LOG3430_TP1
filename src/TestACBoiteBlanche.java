@@ -11,7 +11,7 @@ import org.junit.BeforeClass;
 import org.junit.Test;
 
 
-public class TestAC {
+public class TestACBoiteBlanche {
 
 	@BeforeClass
 	public static void setUpBeforeClass() throws Exception {
@@ -736,6 +736,34 @@ public class TestAC {
 	public void testAC64() throws Exception {
 		ISuiteChainee suite;
 		suite = new SuiteChainee("testac64.properties", "division", 10, 0, 5, false);
+
+	}
+	
+	@Test (expected = Exception.class)
+	public void testAC65() throws Exception {
+		ISuiteChainee suite;
+		suite = new SuiteChainee("fewahkljewhfjkewh.//||/|#/waejklfh", "addition", 1, 2, 5, true);
+
+	}
+	
+	@Test (expected = Exception.class)
+	public void testAC66() throws Exception {
+		ISuiteChainee suite;
+		suite = new SuiteChainee("testac66.properties", "Bonjour!", 1, 2, 5, true);
+
+	}
+	
+	@Test (expected = Exception.class)
+	public void testAC67() throws Exception {
+		ISuiteChainee suite;
+		suite = new SuiteChainee("testac67.properties", "addition", 1, 2, -9, true);
+
+	}
+	
+	@Test (expected = Exception.class)
+	public void testAC68() throws Exception {
+		ISuiteChainee suite;
+		suite = new SuiteChainee("testac68.properties", "addition", 1, 2, 15, true);
 
 	}
 	

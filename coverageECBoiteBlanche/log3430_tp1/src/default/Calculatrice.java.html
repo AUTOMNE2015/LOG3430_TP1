@@ -1,0 +1,131 @@
+<?xml version="1.0" encoding="UTF-8"?><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml" lang="fr"><head><meta http-equiv="Content-Type" content="text/html;charset=UTF-8"/><link rel="stylesheet" href="../../../.resources/report.css" type="text/css"/><link rel="shortcut icon" href="../../../.resources/report.gif" type="image/gif"/><title>Calculatrice.java</title><link rel="stylesheet" href="../../../.resources/prettify.css" type="text/css"/><script type="text/javascript" src="../../../.resources/prettify.js"></script></head><body onload="window['PR_TAB_WIDTH']=4;prettyPrint()"><div class="breadcrumb" id="breadcrumb"><span class="info"><a href="../../../.sessions.html" class="el_session">Sessions</a></span><a href="../../../index.html" class="el_report">TestECBoiteBlanche (2015-10-05 09:53:16)</a> &gt; <a href="../../index.html" class="el_group">log3430_tp1</a> &gt; <a href="../index.html" class="el_bundle">src</a> &gt; <a href="index.source.html" class="el_package">default</a> &gt; <span class="el_source">Calculatrice.java</span></div><h1>Calculatrice.java</h1><pre class="source lang-java linenums">
+<span class="fc" id="L2">public class Calculatrice implements ICalculatrice {</span>
+	 /*
+	    * Appeler cette méthode afin d’obtenir la somme de valeur1 et de valeur2
+	    * (valeur1 + valeur2).
+	    */
+		@Override
+		public int addition(int valeur1, int valeur2) throws Exception
+		{
+<span class="fc" id="L10">			float tampon1 = valeur1;</span>
+<span class="fc" id="L11">			float tampon2 = valeur2;</span>
+			
+<span class="pc bpc" id="L13" title="1 of 2 branches missed.">			if(tampon2 &gt; 0)</span>
+			{
+<span class="fc bfc" id="L15" title="All 2 branches covered.">				while(tampon2-- != 0)</span>
+				{
+<span class="fc" id="L17">					tampon1++;</span>
+				}
+<span class="fc" id="L19">			}</span>
+<span class="nc bnc" id="L20" title="All 2 branches missed.">			else if (tampon2 &lt; 0)</span>
+			{
+<span class="nc bnc" id="L22" title="All 2 branches missed.">				while(tampon2++ != 0)</span>
+				{
+<span class="nc" id="L24">					tampon1--;</span>
+				}
+			}
+			
+			// Lance une exception en cas d'overflow.
+<span class="pc bpc" id="L29" title="2 of 4 branches missed.">			if(tampon1 &gt; Integer.MAX_VALUE || tampon1 &lt; Integer.MIN_VALUE)</span>
+			{
+<span class="nc" id="L31">				throw new Exception(&quot;Overflow du type Integer.&quot;);</span>
+			}
+			
+<span class="fc" id="L34">			return (int) tampon1;</span>
+		}
+	        
+	    /*
+	    * Appeler cette méthode afin d’obtenir la différence de valeur1 et 
+	    * de valeur2 (valeur1 - valeur2).
+	    */
+		@Override
+		public int soustraction(int valeur1, int valeur2) throws Exception
+		{
+<span class="fc" id="L44">			float tampon1 = valeur1;</span>
+<span class="fc" id="L45">			float tampon2 = valeur2;</span>
+			
+<span class="fc bfc" id="L47" title="All 2 branches covered.">			if(tampon2 &gt; 0)</span>
+			{
+<span class="fc bfc" id="L49" title="All 2 branches covered.">				while(tampon2-- != 0)</span>
+				{
+<span class="fc" id="L51">					tampon1--;</span>
+				}
+<span class="fc" id="L53">			}</span>
+<span class="pc bpc" id="L54" title="1 of 2 branches missed.">			else if (tampon2 &lt; 0)</span>
+			{
+<span class="nc bnc" id="L56" title="All 2 branches missed.">				while(tampon2++ != 0)</span>
+				{
+<span class="nc" id="L58">					tampon1++;</span>
+				}
+			}
+			
+			// Lance une exception en cas d'overflow.
+<span class="pc bpc" id="L63" title="2 of 4 branches missed.">			if(tampon1 &gt; Integer.MAX_VALUE || tampon1 &lt; Integer.MIN_VALUE)</span>
+			{
+<span class="nc" id="L65">				throw new Exception(&quot;Overflow du type Integer.&quot;);</span>
+			}
+			
+<span class="fc" id="L68">			return (int) tampon1;</span>
+		}
+
+	    /*
+	    * Appeler cette méthode afin d’obtenir le produit de valeur1 et de 
+	    * valeur2 (valeur1 * valeur2).
+	    */
+		@Override
+		public int multiplication(int valeur1, int valeur2) throws Exception
+		{
+<span class="fc" id="L78">			int ret = 0;</span>
+<span class="fc" id="L79">			int valeurAbsolue1 = valeur1;</span>
+<span class="pc bpc" id="L80" title="1 of 2 branches missed.">			if (valeur1 &lt; 0){valeurAbsolue1 = soustraction(0, valeur1);}</span>
+			
+<span class="fc" id="L82">			int valeurAbsolue2 = valeur2;</span>
+<span class="pc bpc" id="L83" title="1 of 2 branches missed.">			if (valeur2 &lt; 0){valeurAbsolue2 = soustraction(0, valeur2);}</span>
+			
+<span class="fc bfc" id="L85" title="All 2 branches covered.">			for (int i = 0; i &lt; valeurAbsolue2; i++)</span>
+			{
+<span class="fc" id="L87">				ret = addition(ret, valeurAbsolue1);</span>
+			}
+			
+<span class="pc bpc" id="L90" title="3 of 6 branches missed.">			if((valeur1&lt;0)^(valeur2&lt;0)){ret = soustraction(0, ret);}</span>
+			
+			// Pas besoin de lancer une exception, car l'addition/soustraction le font dÃ©jÃ .
+<span class="fc" id="L93">			return ret;</span>
+		}
+
+	    /*
+	    * Appeler cette méthode afin d’obtenir le quotient de valeur1 et de 
+	    * valeur2 (valeur1 / valeur2). Dans le cas d’une division par zéro,
+	    * la suite chaînée ne sera pas complétée.
+	    */
+		@Override
+		public int division(int valeur1, int valeur2) throws Exception
+		{
+<span class="pc bpc" id="L104" title="1 of 2 branches missed.">			if(valeur1 == 0){</span>
+<span class="nc" id="L105">				return 0;</span>
+			}
+			
+<span class="pc bpc" id="L108" title="1 of 2 branches missed.">			if(valeur2 == 0){</span>
+<span class="nc" id="L109">				throw new Exception(&quot;Division par zÃ©ro.&quot;);</span>
+			}
+			
+<span class="fc" id="L112">			int ret = 0;</span>
+<span class="fc" id="L113">			int valeurAbsolue1 = valeur1;</span>
+<span class="pc bpc" id="L114" title="1 of 2 branches missed.">			if (valeur1 &lt; 0){valeurAbsolue1 = soustraction(0, valeur1);}</span>
+			
+<span class="fc" id="L116">			int valeurAbsolue2 = valeur2;</span>
+<span class="pc bpc" id="L117" title="1 of 2 branches missed.">			if (valeur2 &lt; 0){valeurAbsolue2 = soustraction(0, valeur2);}</span>
+			
+<span class="pc bfc" id="L119" title="All 2 branches covered.">			while (valeurAbsolue1 &gt;= valeurAbsolue2)</span>
+			{
+<span class="fc" id="L121">				ret++;</span>
+<span class="fc" id="L122">				valeurAbsolue1 = soustraction(valeurAbsolue1, valeurAbsolue2);</span>
+			}
+			
+<span class="pc bpc" id="L125" title="3 of 6 branches missed.">			if((valeur1&lt;0)^(valeur2&lt;0)){ret = soustraction(0, ret);}</span>
+			
+			// Pas besoin de lancer une exception, car l'addition/soustraction le font dÃ©jÃ .
+<span class="fc" id="L128">			return ret;</span>
+		}
+}
+</pre><div class="footer"><span class="right">Created with <a href="http://www.eclemma.org/jacoco">JaCoCo</a> 0.7.2.201409121644</span>TestECBoiteBlanche (2015-10-05 09:53:16)</div></body></html>

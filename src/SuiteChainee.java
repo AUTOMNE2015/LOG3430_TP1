@@ -117,10 +117,10 @@ public class SuiteChainee implements ISuiteChainee {
 		
 		// Charge le contenu deja present.
 		String ancienContenu = properties.getProperty("contenu");
-		if(ancienContenu == null)
+		/*if(ancienContenu == null)
 		{
 			ancienContenu = "";
-		}
+		}*/
 		
 		if(estVide || ancienContenu.isEmpty()){
 		properties.setProperty("contenu", toString());
