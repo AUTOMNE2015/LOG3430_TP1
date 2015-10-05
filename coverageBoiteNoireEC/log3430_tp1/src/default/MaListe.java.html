@@ -1,0 +1,209 @@
+<?xml version="1.0" encoding="UTF-8"?><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml" lang="fr"><head><meta http-equiv="Content-Type" content="text/html;charset=UTF-8"/><link rel="stylesheet" href="../../../.resources/report.css" type="text/css"/><link rel="shortcut icon" href="../../../.resources/report.gif" type="image/gif"/><title>MaListe.java</title><link rel="stylesheet" href="../../../.resources/prettify.css" type="text/css"/><script type="text/javascript" src="../../../.resources/prettify.js"></script></head><body onload="window['PR_TAB_WIDTH']=4;prettyPrint()"><div class="breadcrumb" id="breadcrumb"><span class="info"><a href="../../../.sessions.html" class="el_session">Sessions</a></span><a href="../../../index.html" class="el_report">TestEC (2015-10-05 10:04:05)</a> &gt; <a href="../../index.html" class="el_group">log3430_tp1</a> &gt; <a href="../index.html" class="el_bundle">src</a> &gt; <a href="index.source.html" class="el_package">default</a> &gt; <span class="el_source">MaListe.java</span></div><h1>MaListe.java</h1><pre class="source lang-java linenums">
+<span class="fc" id="L2">public class MaListe implements IMaListe {</span>
+
+	/*
+	 * Appeler cette methode pour acceder au premier element de la suite. 
+	 */
+	@Override
+	public ElementSuite getPremierElement() {
+<span class="fc" id="L9">		return premierElement;</span>
+	}
+	
+	/*
+	 * Appeler cette methode pour modifier le premier element de la suite. 
+	 */
+	@Override
+	public void setPremierElement(ElementSuite element) {
+<span class="fc" id="L17">		premierElement = element;</span>
+<span class="fc" id="L18">	}</span>
+	
+	/*
+	 * Appeler cette methode pour acceder a l'index de la suite. 
+	 */
+	@Override
+	public int getIndexInterne() {
+<span class="fc" id="L25">		return indexInterne;</span>
+	}
+	
+	
+	/*
+	 * Appeler cette methode pour modifier l'index de la suite. 
+	 */
+	@Override
+	public void setIndexInterne(int indexInterne) {
+<span class="fc" id="L34">		this.indexInterne = indexInterne;</span>
+<span class="fc" id="L35">	}</span>
+
+	/*
+	* Appeler cette méthode lorsqu’il est désirable d’ajouter un élément à la fin de la suite chaînée.
+	*/
+	@Override
+	public void add(ElementSuite nouvelElement) {
+<span class="fc" id="L42">		addInterne(nouvelElement);</span>
+<span class="fc" id="L43">	}</span>
+
+	/*
+	* Implementation interne de add.
+	*/
+	private void addInterne(ElementSuite nouvelElement) {
+<span class="pc bpc" id="L49" title="1 of 2 branches missed.">		if(premierElement == null)</span>
+		{
+<span class="nc" id="L51">			premierElement = nouvelElement;</span>
+<span class="nc" id="L52">		} else {</span>
+<span class="fc" id="L53">			premierElement.add(nouvelElement);</span>
+<span class="fc" id="L54">			setIndexInterne(getIndexInterne() + 1);</span>
+		}
+<span class="fc" id="L56">	}</span>
+
+	/*
+	* Appeler cette méthode pour obtenir l’élément d’une suite chaînée à 
+	* l’index « position » désiré. Dans le cas où « position » est plus 
+	* grand que la taille de la suite chaînée, la méthode retournera null.
+	*/
+	@Override
+	public ElementSuite getAt(int position) {
+	
+<span class="nc bnc" id="L66" title="All 2 branches missed.">		if(position &lt; 0)</span>
+	    {
+<span class="nc" id="L68">	        System.out.println(&quot;Erreur getAt: Element hors de portee&quot;);</span>
+<span class="nc" id="L69">	        return null;</span>
+	    }
+	
+<span class="nc" id="L72">	    ElementSuite suivant = premierElement;</span>
+	    
+	    // On parcourt la suite jusqu'a la position voulue.
+<span class="nc bnc" id="L75" title="All 2 branches missed.">	    for (int i = 0; i &lt; position; i++){</span>
+<span class="nc bnc" id="L76" title="All 2 branches missed.">	        if (suivant == null)</span>
+	        {
+<span class="nc" id="L78">	            System.out.println(&quot;Erreur getAt: Element hors de portee&quot;);</span>
+<span class="nc" id="L79">	            return null;</span>
+	        }
+<span class="nc" id="L81">	        suivant = suivant.next();</span>
+	    }
+	
+<span class="nc" id="L84">	    return suivant;</span>
+	}
+
+	/*
+	* Appeler cette méthode pour obtenir la grandeur de la suite chaînée.
+	*/
+	@Override
+	public int getSize() {
+<span class="nc" id="L92">	    int grosseur = 0;</span>
+<span class="nc" id="L93">	    ElementSuite suivant = premierElement;</span>
+	    
+	    // On itere dans la suite en comptant.
+<span class="nc bnc" id="L96" title="All 2 branches missed.">	    while(suivant != null){</span>
+<span class="nc" id="L97">	        grosseur++;  </span>
+<span class="nc" id="L98">	        suivant = suivant.next();</span>
+	    }
+<span class="nc" id="L100">	    return grosseur;</span>
+	}
+
+	/*
+	* Appeler cette methode pour supprimer l’element d’une suite chainee à
+	* l’index « position » desire. Dans le cas ou « position » est plus 
+	* grand que la taille de la suite chainee, rien ne se passera.
+	*/
+	@Override
+	public void removeAt(int position) {   
+<span class="nc" id="L110">	    ElementSuite courant = getAt(position);</span>
+<span class="nc bnc" id="L111" title="All 2 branches missed.">	    if (courant == null)</span>
+	    {
+<span class="nc" id="L113">	            System.out.println(&quot;Erreur removeAt: element hors de portee&quot;);</span>
+<span class="nc" id="L114">	            return;</span>
+	    }
+	    // On construit un lien entre l'element avant et apres.
+<span class="nc" id="L117">	    ElementSuite avant = getAt(position-1);</span>
+<span class="nc bnc" id="L118" title="All 2 branches missed.">	    if(avant != null)</span>
+	    {
+<span class="nc" id="L120">	        avant.prochain = courant.next();</span>
+	    }
+	    // Si c'est le premier element, on remplace le premier element.
+<span class="nc bnc" id="L123" title="All 2 branches missed.">	    if(position == 0)</span>
+	    {
+<span class="nc" id="L125">	        premierElement = courant.next();</span>
+	    }
+<span class="nc" id="L127">	    courant.prochain = null;</span>
+<span class="nc" id="L128">	    setIndexInterne(position);</span>
+<span class="nc" id="L129">	}</span>
+
+	/*
+	* Appeler cette méthode lorsqu’il faut supprimer l’élément avec la valeur
+	* « element »  de la suite chaînée. Dans le cas où « element » est 
+	* présent multiples fois dans la suite chaînée, alors la première 
+	* instance d’ « element » sera supprimée et les suivantes seront 
+	* intactes.
+	*/
+	@Override
+	public void removeItem(int element) {
+<span class="nc" id="L140">	    ElementSuite suivant = premierElement;</span>
+<span class="nc" id="L141">	    int index = 0;</span>
+	    // On cherche le premier element qui correspond a ce qu'on veut.
+<span class="nc bnc" id="L143" title="All 6 branches missed.">	    while (suivant != null &amp;&amp; suivant.valeur != element &amp;&amp; suivant.next() != null)</span>
+	    {
+<span class="nc" id="L145">	        suivant = suivant.next();</span>
+<span class="nc" id="L146">	        index++;</span>
+	    }
+	    // Si on le trouve, on l'efface.
+<span class="nc bnc" id="L149" title="All 4 branches missed.">	    if(suivant != null &amp;&amp; suivant.valeur == element){</span>
+<span class="nc" id="L150">	        removeAt(index);</span>
+<span class="nc" id="L151">	        setIndexInterne(index);</span>
+<span class="nc" id="L152">	    }</span>
+	    else
+	    {
+<span class="nc" id="L155">	         System.out.println(&quot;Erreur removeItem: Element \&quot;&quot;+element+&quot;\&quot; introuvable.&quot;);</span>
+	    }
+<span class="nc" id="L157">	}</span>
+
+	/*
+	* Appeler cette méthode pour modifier un élément d’une suite chaînée à 
+	* l’index « position » en écrasant l’élément courant avec la valeur 
+	* « nouvelElement ». Dans le cas où « position » est plus grand que la
+	* taille de la suite chaînée, rien ne se passera.
+	*/
+	@Override
+	public void setAt(int nouvelElement, int position) {
+	    // On trouve l'element a la position voulue pour remplacer sa valeur.
+<span class="nc" id="L168">	    ElementSuite remplace = getAt(position);</span>
+<span class="nc bnc" id="L169" title="All 2 branches missed.">	    if (remplace == null)</span>
+	    {
+<span class="nc" id="L171">	            System.out.println(&quot;Erreur setAt: Element hors de portee&quot;);</span>
+<span class="nc" id="L172">	            return;</span>
+	    }
+<span class="nc" id="L174">	    remplace.valeur = nouvelElement;</span>
+<span class="nc" id="L175">	    setIndexInterne(position);</span>
+<span class="nc" id="L176">	}</span>
+
+	/*
+	* Appeler cette méthode afin d’obtenir une chaîne de caractères 
+	* représentant les valeurs de la suite chaînée dans le bon ordre. 
+	* Par exemple : « 0, 1, 1, 2 ».
+	*/
+	@Override
+	public String toString(){
+<span class="fc" id="L185">		String suite = &quot;&quot;;</span>
+<span class="fc" id="L186">		ElementSuite prochain = premierElement;</span>
+<span class="fc" id="L187">		boolean premier = true;</span>
+<span class="fc bfc" id="L188" title="All 2 branches covered.">		while(prochain != null)</span>
+		{
+<span class="fc bfc" id="L190" title="All 2 branches covered.">			if (!premier)</span>
+			{
+<span class="fc" id="L192">				suite += &quot;, &quot;;</span>
+			}
+<span class="fc" id="L194">			suite = suite.concat(Integer.toString(prochain.valeur));</span>
+<span class="fc" id="L195">			prochain = prochain.next();</span>
+<span class="fc" id="L196">			premier = false;</span>
+		}
+<span class="fc" id="L198">		return suite;</span>
+		
+	}
+	
+	// Represente la valeur de l'index en memoire.
+	private int indexInterne;
+	
+	// Reference vers le premier element de la suite chainee.
+	private ElementSuite premierElement;
+
+}
+</pre><div class="footer"><span class="right">Created with <a href="http://www.eclemma.org/jacoco">JaCoCo</a> 0.7.2.201409121644</span>TestEC (2015-10-05 10:04:05)</div></body></html>

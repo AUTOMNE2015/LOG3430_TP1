@@ -1,0 +1,772 @@
+<?xml version="1.0" encoding="UTF-8"?><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml" lang="fr"><head><meta http-equiv="Content-Type" content="text/html;charset=UTF-8"/><link rel="stylesheet" href="../../../.resources/report.css" type="text/css"/><link rel="shortcut icon" href="../../../.resources/report.gif" type="image/gif"/><title>TestAC.java</title><link rel="stylesheet" href="../../../.resources/prettify.css" type="text/css"/><script type="text/javascript" src="../../../.resources/prettify.js"></script></head><body onload="window['PR_TAB_WIDTH']=4;prettyPrint()"><div class="breadcrumb" id="breadcrumb"><span class="info"><a href="../../../.sessions.html" class="el_session">Sessions</a></span><a href="../../../index.html" class="el_report">TestAC (2015-10-05 10:03:01)</a> &gt; <a href="../../index.html" class="el_group">log3430_tp1</a> &gt; <a href="../index.html" class="el_bundle">src</a> &gt; <a href="index.source.html" class="el_package">default</a> &gt; <span class="el_source">TestAC.java</span></div><h1>TestAC.java</h1><pre class="source lang-java linenums">import static org.junit.Assert.*;
+
+import java.io.File;
+import java.io.FileInputStream;
+import java.io.FileNotFoundException;
+import java.io.IOException;
+import java.util.Properties;
+
+import org.junit.AfterClass;
+import org.junit.BeforeClass;
+import org.junit.Test;
+
+
+<span class="fc" id="L14">public class TestAC {</span>
+
+	@BeforeClass
+	public static void setUpBeforeClass() throws Exception {
+<span class="fc" id="L18">	}</span>
+
+	@AfterClass
+	public static void tearDownAfterClass() throws Exception {
+<span class="fc" id="L22">	}</span>
+	
+	@Test
+	public void testAC1() {
+		ISuiteChainee suite;
+		try {
+<span class="fc" id="L28">			suite = new SuiteChainee(&quot;testac1.properties&quot;, &quot;addition&quot;, 10, 2, 0, true);</span>
+<span class="fc" id="L29">			assertTrue(suite.toString().equals(&quot;&quot;));</span>
+<span class="pc" id="L30">		} catch (Exception e) {</span>
+<span class="nc" id="L31">			e.printStackTrace();</span>
+		}
+<span class="fc" id="L33">	}</span>
+	
+	@Test
+	public void testAC2() {
+		ISuiteChainee suite;
+		try {
+<span class="fc" id="L39">			String vieuxContenu = loadOldContent(&quot;testac2.properties&quot;);</span>
+<span class="fc" id="L40">			suite = new SuiteChainee(&quot;testac2.properties&quot;, &quot;addition&quot;, 10, 2, 0, false);</span>
+<span class="fc" id="L41">			assertTrue(suite.toString().equals(vieuxContenu+&quot;&quot;));</span>
+<span class="pc" id="L42">		} catch (Exception e) {</span>
+<span class="nc" id="L43">			e.printStackTrace();</span>
+		}
+<span class="fc" id="L45">	}</span>
+
+	@Test
+	public void testAC3() {
+		ISuiteChainee suite;
+		try {
+<span class="fc" id="L51">			suite = new SuiteChainee(&quot;testac3.properties&quot;, &quot;addition&quot;, 10, 2, 1, true);</span>
+<span class="fc" id="L52">			assertTrue(suite.toString().equals(&quot;10&quot;));</span>
+<span class="pc" id="L53">		} catch (Exception e) {</span>
+<span class="nc" id="L54">			e.printStackTrace();</span>
+		}
+<span class="fc" id="L56">	}</span>
+	
+	@Test
+	public void testAC4() {
+		ISuiteChainee suite;
+		try {
+<span class="fc" id="L62">			String vieuxContenu = loadOldContent(&quot;testac4.properties&quot;);</span>
+<span class="fc" id="L63">			suite = new SuiteChainee(&quot;testac4.properties&quot;, &quot;addition&quot;, 10, 2, 1, false);</span>
+<span class="fc" id="L64">			assertTrue(suite.toString().equals(vieuxContenu+&quot;10&quot;));</span>
+<span class="pc" id="L65">		} catch (Exception e) {</span>
+<span class="nc" id="L66">			e.printStackTrace();</span>
+		}
+<span class="fc" id="L68">	}</span>
+	
+	@Test
+	public void testAC5() {
+		ISuiteChainee suite;
+		try {
+<span class="fc" id="L74">			suite = new SuiteChainee(&quot;testac5.properties&quot;, &quot;addition&quot;, 10, 2, 2, true);</span>
+<span class="fc" id="L75">			assertTrue(suite.toString().equals(&quot;10, 2&quot;));</span>
+<span class="pc" id="L76">		} catch (Exception e) {</span>
+<span class="nc" id="L77">			e.printStackTrace();</span>
+		}
+<span class="fc" id="L79">	}</span>
+	
+	@Test
+	public void testAC6() {
+		ISuiteChainee suite;
+		try {
+<span class="fc" id="L85">			String vieuxContenu = loadOldContent(&quot;testac6.properties&quot;);</span>
+<span class="fc" id="L86">			suite = new SuiteChainee(&quot;testac6.properties&quot;, &quot;addition&quot;, 10, 2, 2, false);</span>
+<span class="fc" id="L87">			assertTrue(suite.toString().equals(vieuxContenu+&quot;10, 2&quot;));</span>
+<span class="pc" id="L88">		} catch (Exception e) {</span>
+<span class="nc" id="L89">			e.printStackTrace();</span>
+		}
+<span class="fc" id="L91">	}</span>
+	
+	@Test
+	public void testAC7() {
+		ISuiteChainee suite;
+		try {
+<span class="fc" id="L97">			suite = new SuiteChainee(&quot;testac7.properties&quot;, &quot;addition&quot;, 10, 2, 5, true);</span>
+<span class="fc" id="L98">			assertTrue(suite.toString().equals(&quot;10, 2, 12, 14, 26&quot;));</span>
+<span class="pc" id="L99">		} catch (Exception e) {</span>
+<span class="nc" id="L100">			e.printStackTrace();</span>
+		}
+<span class="fc" id="L102">	}</span>
+	
+	@Test
+	public void testAC8() {
+		ISuiteChainee suite;
+		try {
+<span class="fc" id="L108">			String vieuxContenu = loadOldContent(&quot;testac8.properties&quot;);</span>
+<span class="fc" id="L109">			suite = new SuiteChainee(&quot;testac8.properties&quot;, &quot;addition&quot;, 10, 2, 5, false);</span>
+<span class="fc" id="L110">			assertTrue(suite.toString().equals(vieuxContenu+&quot;10, 2, 12, 14, 26&quot;));</span>
+<span class="pc" id="L111">		} catch (Exception e) {</span>
+<span class="nc" id="L112">			e.printStackTrace();</span>
+		}
+<span class="fc" id="L114">	}</span>
+	
+	@Test
+	public void testAC9() {
+		ISuiteChainee suite;
+		try {
+<span class="fc" id="L120">			suite = new SuiteChainee(&quot;testac9.properties&quot;, &quot;soustraction&quot;, 10, 2, 0, true);</span>
+<span class="fc" id="L121">			assertTrue(suite.toString().equals(&quot;&quot;));</span>
+<span class="pc" id="L122">		} catch (Exception e) {</span>
+<span class="nc" id="L123">			e.printStackTrace();</span>
+		}
+<span class="fc" id="L125">	}</span>
+	
+	@Test
+	public void testAC10() {
+		ISuiteChainee suite;
+		try {
+<span class="fc" id="L131">			String vieuxContenu = loadOldContent(&quot;testac10.properties&quot;);</span>
+<span class="fc" id="L132">			suite = new SuiteChainee(&quot;testac10.properties&quot;, &quot;soustraction&quot;, 10, 2, 0, false);</span>
+<span class="fc" id="L133">			assertTrue(suite.toString().equals(vieuxContenu+&quot;&quot;));</span>
+<span class="pc" id="L134">		} catch (Exception e) {</span>
+<span class="nc" id="L135">			e.printStackTrace();</span>
+		}
+<span class="fc" id="L137">	}</span>
+
+	@Test
+	public void testAC11() {
+		ISuiteChainee suite;
+		try {
+<span class="fc" id="L143">			suite = new SuiteChainee(&quot;testac11.properties&quot;, &quot;soustraction&quot;, 10, 2, 1, true);</span>
+<span class="fc" id="L144">			assertTrue(suite.toString().equals(&quot;10&quot;));</span>
+<span class="pc" id="L145">		} catch (Exception e) {</span>
+<span class="nc" id="L146">			e.printStackTrace();</span>
+		}
+<span class="fc" id="L148">	}</span>
+	
+	@Test
+	public void testAC12() {
+		ISuiteChainee suite;
+		try {
+<span class="fc" id="L154">			String vieuxContenu = loadOldContent(&quot;testac12.properties&quot;);</span>
+<span class="fc" id="L155">			suite = new SuiteChainee(&quot;testac12.properties&quot;, &quot;soustraction&quot;, 10, 2, 1, false);</span>
+<span class="fc" id="L156">			assertTrue(suite.toString().equals(vieuxContenu+&quot;10&quot;));</span>
+<span class="pc" id="L157">		} catch (Exception e) {</span>
+<span class="nc" id="L158">			e.printStackTrace();</span>
+		}
+<span class="fc" id="L160">	}</span>
+	
+	@Test
+	public void testAC13() {
+		ISuiteChainee suite;
+		try {
+<span class="fc" id="L166">			suite = new SuiteChainee(&quot;testac13.properties&quot;, &quot;soustraction&quot;, 10, 2, 2, true);</span>
+<span class="fc" id="L167">			assertTrue(suite.toString().equals(&quot;10, 2&quot;));</span>
+<span class="pc" id="L168">		} catch (Exception e) {</span>
+<span class="nc" id="L169">			e.printStackTrace();</span>
+		}
+<span class="fc" id="L171">	}</span>
+	
+	@Test
+	public void testAC14() {
+		ISuiteChainee suite;
+		try {
+<span class="fc" id="L177">			String vieuxContenu = loadOldContent(&quot;testac14.properties&quot;);</span>
+<span class="fc" id="L178">			suite = new SuiteChainee(&quot;testac14.properties&quot;, &quot;soustraction&quot;, 10, 2, 2, false);</span>
+<span class="fc" id="L179">			assertTrue(suite.toString().equals(vieuxContenu+&quot;10, 2&quot;));</span>
+<span class="pc" id="L180">		} catch (Exception e) {</span>
+<span class="nc" id="L181">			e.printStackTrace();</span>
+		}
+<span class="fc" id="L183">	}</span>
+	
+	@Test
+	public void testAC15() {
+		ISuiteChainee suite;
+		try {
+<span class="fc" id="L189">			suite = new SuiteChainee(&quot;testac15.properties&quot;, &quot;soustraction&quot;, 10, 2, 5, true);</span>
+<span class="fc" id="L190">			assertTrue(suite.toString().equals(&quot;10, 2, 8, -6, 14&quot;));</span>
+<span class="pc" id="L191">		} catch (Exception e) {</span>
+<span class="nc" id="L192">			e.printStackTrace();</span>
+		}
+<span class="fc" id="L194">	}</span>
+	
+	@Test
+	public void testAC16() {
+		ISuiteChainee suite;
+		try {
+<span class="fc" id="L200">			String vieuxContenu = loadOldContent(&quot;testac16.properties&quot;);</span>
+<span class="fc" id="L201">			suite = new SuiteChainee(&quot;testac16.properties&quot;, &quot;soustraction&quot;, 10, 2, 5, false);</span>
+<span class="fc" id="L202">			assertTrue(suite.toString().equals(vieuxContenu+&quot;10, 2, 8, -6, 14&quot;));</span>
+<span class="pc" id="L203">		} catch (Exception e) {</span>
+<span class="nc" id="L204">			e.printStackTrace();</span>
+		}
+<span class="fc" id="L206">	}</span>
+	
+	@Test
+	public void testAC17() {
+		ISuiteChainee suite;
+		try {
+<span class="fc" id="L212">			suite = new SuiteChainee(&quot;testac17.properties&quot;, &quot;multiplication&quot;, 10, 2, 0, true);</span>
+<span class="fc" id="L213">			assertTrue(suite.toString().equals(&quot;&quot;));</span>
+<span class="pc" id="L214">		} catch (Exception e) {</span>
+<span class="nc" id="L215">			e.printStackTrace();</span>
+		}
+<span class="fc" id="L217">	}</span>
+	
+	@Test
+	public void testAC18() {
+		ISuiteChainee suite;
+		try {
+<span class="fc" id="L223">			String vieuxContenu = loadOldContent(&quot;testac18.properties&quot;);</span>
+<span class="fc" id="L224">			suite = new SuiteChainee(&quot;testac18.properties&quot;, &quot;multiplication&quot;, 10, 2, 0, false);</span>
+<span class="fc" id="L225">			assertTrue(suite.toString().equals(vieuxContenu+&quot;&quot;));</span>
+<span class="pc" id="L226">		} catch (Exception e) {</span>
+<span class="nc" id="L227">			e.printStackTrace();</span>
+		}
+<span class="fc" id="L229">	}</span>
+
+	@Test
+	public void testAC19() {
+		ISuiteChainee suite;
+		try {
+<span class="fc" id="L235">			suite = new SuiteChainee(&quot;testac19.properties&quot;, &quot;multiplication&quot;, 10, 2, 1, true);</span>
+<span class="fc" id="L236">			assertTrue(suite.toString().equals(&quot;10&quot;));</span>
+<span class="pc" id="L237">		} catch (Exception e) {</span>
+<span class="nc" id="L238">			e.printStackTrace();</span>
+		}
+<span class="fc" id="L240">	}</span>
+	
+	@Test
+	public void testAC20() {
+		ISuiteChainee suite;
+		try {
+<span class="fc" id="L246">			String vieuxContenu = loadOldContent(&quot;testac20.properties&quot;);</span>
+<span class="fc" id="L247">			suite = new SuiteChainee(&quot;testac20.properties&quot;, &quot;multiplication&quot;, 10, 2, 1, false);</span>
+<span class="fc" id="L248">			assertTrue(suite.toString().equals(vieuxContenu+&quot;10&quot;));</span>
+<span class="pc" id="L249">		} catch (Exception e) {</span>
+<span class="nc" id="L250">			e.printStackTrace();</span>
+		}
+<span class="fc" id="L252">	}</span>
+	
+	@Test
+	public void testAC21() {
+		ISuiteChainee suite;
+		try {
+<span class="fc" id="L258">			suite = new SuiteChainee(&quot;testac21.properties&quot;, &quot;multiplication&quot;, 10, 2, 2, true);</span>
+<span class="fc" id="L259">			assertTrue(suite.toString().equals(&quot;10, 2&quot;));</span>
+<span class="pc" id="L260">		} catch (Exception e) {</span>
+<span class="nc" id="L261">			e.printStackTrace();</span>
+		}
+<span class="fc" id="L263">	}</span>
+	
+	@Test
+	public void testAC22() {
+		ISuiteChainee suite;
+		try {
+<span class="fc" id="L269">			String vieuxContenu = loadOldContent(&quot;testac22.properties&quot;);</span>
+<span class="fc" id="L270">			suite = new SuiteChainee(&quot;testac22.properties&quot;, &quot;multiplication&quot;, 10, 2, 2, false);</span>
+<span class="fc" id="L271">			assertTrue(suite.toString().equals(vieuxContenu+&quot;10, 2&quot;));</span>
+<span class="pc" id="L272">		} catch (Exception e) {</span>
+<span class="nc" id="L273">			e.printStackTrace();</span>
+		}
+<span class="fc" id="L275">	}</span>
+	
+	@Test
+	public void testAC23() {
+		ISuiteChainee suite;
+		try {
+<span class="fc" id="L281">			suite = new SuiteChainee(&quot;testac23.properties&quot;, &quot;multiplication&quot;, 10, 2, 5, true);</span>
+<span class="fc" id="L282">			assertTrue(suite.toString().equals(&quot;10, 2, 20, 40, 800&quot;));</span>
+<span class="pc" id="L283">		} catch (Exception e) {</span>
+<span class="nc" id="L284">			e.printStackTrace();</span>
+		}
+<span class="fc" id="L286">	}</span>
+	
+	@Test
+	public void testAC24() {
+		ISuiteChainee suite;
+		try {
+<span class="fc" id="L292">			String vieuxContenu = loadOldContent(&quot;testac24.properties&quot;);</span>
+<span class="fc" id="L293">			suite = new SuiteChainee(&quot;testac24.properties&quot;, &quot;multiplication&quot;, 10, 2, 5, false);</span>
+<span class="fc" id="L294">			assertTrue(suite.toString().equals(vieuxContenu+&quot;10, 2, 20, 40, 800&quot;));</span>
+<span class="pc" id="L295">		} catch (Exception e) {</span>
+<span class="nc" id="L296">			e.printStackTrace();</span>
+		}
+<span class="fc" id="L298">	}</span>
+	
+	@Test
+	public void testAC25() {
+		ISuiteChainee suite;
+		try {
+<span class="fc" id="L304">			suite = new SuiteChainee(&quot;testac25.properties&quot;, &quot;division&quot;, 10, 2, 0, true);</span>
+<span class="fc" id="L305">			assertTrue(suite.toString().equals(&quot;&quot;));</span>
+<span class="pc" id="L306">		} catch (Exception e) {</span>
+<span class="nc" id="L307">			e.printStackTrace();</span>
+		}
+<span class="fc" id="L309">	}</span>
+	
+	@Test
+	public void testAC26() {
+		ISuiteChainee suite;
+		try {
+<span class="fc" id="L315">			String vieuxContenu = loadOldContent(&quot;testac26.properties&quot;);</span>
+<span class="fc" id="L316">			suite = new SuiteChainee(&quot;testac26.properties&quot;, &quot;division&quot;, 10, 2, 0, false);</span>
+<span class="fc" id="L317">			assertTrue(suite.toString().equals(vieuxContenu+&quot;&quot;));</span>
+<span class="pc" id="L318">		} catch (Exception e) {</span>
+<span class="nc" id="L319">			e.printStackTrace();</span>
+		}
+<span class="fc" id="L321">	}</span>
+
+	@Test
+	public void testAC27() {
+		ISuiteChainee suite;
+		try {
+<span class="fc" id="L327">			suite = new SuiteChainee(&quot;testac27.properties&quot;, &quot;division&quot;, 10, 2, 1, true);</span>
+<span class="fc" id="L328">			assertTrue(suite.toString().equals(&quot;10&quot;));</span>
+<span class="pc" id="L329">		} catch (Exception e) {</span>
+<span class="nc" id="L330">			e.printStackTrace();</span>
+		}
+<span class="fc" id="L332">	}</span>
+	
+	@Test
+	public void testAC28() {
+		ISuiteChainee suite;
+		try {
+<span class="fc" id="L338">			String vieuxContenu = loadOldContent(&quot;testac28.properties&quot;);</span>
+<span class="fc" id="L339">			suite = new SuiteChainee(&quot;testac28.properties&quot;, &quot;division&quot;, 10, 2, 1, false);</span>
+<span class="fc" id="L340">			assertTrue(suite.toString().equals(vieuxContenu+&quot;10&quot;));</span>
+<span class="pc" id="L341">		} catch (Exception e) {</span>
+<span class="nc" id="L342">			e.printStackTrace();</span>
+		}
+<span class="fc" id="L344">	}</span>
+	
+	@Test
+	public void testAC29() {
+		ISuiteChainee suite;
+		try {
+<span class="fc" id="L350">			suite = new SuiteChainee(&quot;testac29.properties&quot;, &quot;division&quot;, 10, 2, 2, true);</span>
+<span class="fc" id="L351">			assertTrue(suite.toString().equals(&quot;10, 2&quot;));</span>
+<span class="pc" id="L352">		} catch (Exception e) {</span>
+<span class="nc" id="L353">			e.printStackTrace();</span>
+		}
+<span class="fc" id="L355">	}</span>
+	
+	@Test
+	public void testAC30() {
+		ISuiteChainee suite;
+		try {
+<span class="fc" id="L361">			String vieuxContenu = loadOldContent(&quot;testac30.properties&quot;);</span>
+<span class="fc" id="L362">			suite = new SuiteChainee(&quot;testac30.properties&quot;, &quot;division&quot;, 10, 2, 2, false);</span>
+<span class="fc" id="L363">			assertTrue(suite.toString().equals(vieuxContenu+&quot;10, 2&quot;));</span>
+<span class="pc" id="L364">		} catch (Exception e) {</span>
+<span class="nc" id="L365">			e.printStackTrace();</span>
+		}
+<span class="fc" id="L367">	}</span>
+	
+	@Test(expected = Exception.class)
+	public void testAC31() throws Exception {
+		ISuiteChainee suite;
+<span class="nc" id="L372">		suite = new SuiteChainee(&quot;testac31.properties&quot;, &quot;division&quot;, 10, 2, 5, true);</span>
+
+<span class="nc" id="L374">	}</span>
+	
+	@Test (expected = Exception.class)
+	public void testAC32() throws Exception {
+		ISuiteChainee suite;
+<span class="nc" id="L379">		suite = new SuiteChainee(&quot;testac32.properties&quot;, &quot;division&quot;, 10, 2, 5, false);</span>
+
+<span class="nc" id="L381">	}</span>
+	
+	@Test
+	public void testAC33() {
+		ISuiteChainee suite;
+		try {
+<span class="fc" id="L387">			suite = new SuiteChainee(&quot;testac33.properties&quot;, &quot;addition&quot;, 10, 0, 0, true);</span>
+<span class="fc" id="L388">			assertTrue(suite.toString().equals(&quot;&quot;));</span>
+<span class="pc" id="L389">		} catch (Exception e) {</span>
+<span class="nc" id="L390">			e.printStackTrace();</span>
+		}
+<span class="fc" id="L392">	}</span>
+	
+	@Test
+	public void testAC34() {
+		ISuiteChainee suite;
+		try {
+<span class="fc" id="L398">			String vieuxContenu = loadOldContent(&quot;testac34.properties&quot;);</span>
+<span class="fc" id="L399">			suite = new SuiteChainee(&quot;testac34.properties&quot;, &quot;addition&quot;, 10, 0, 0, false);</span>
+<span class="fc" id="L400">			assertTrue(suite.toString().equals(vieuxContenu+&quot;&quot;));</span>
+<span class="pc" id="L401">		} catch (Exception e) {</span>
+<span class="nc" id="L402">			e.printStackTrace();</span>
+		}
+<span class="fc" id="L404">	}</span>
+
+	@Test
+	public void testAC35() {
+		ISuiteChainee suite;
+		try {
+<span class="fc" id="L410">			suite = new SuiteChainee(&quot;testac35.properties&quot;, &quot;addition&quot;, 10, 0, 1, true);</span>
+<span class="fc" id="L411">			assertTrue(suite.toString().equals(&quot;10&quot;));</span>
+<span class="pc" id="L412">		} catch (Exception e) {</span>
+<span class="nc" id="L413">			e.printStackTrace();</span>
+		}
+<span class="fc" id="L415">	}</span>
+	
+	@Test
+	public void testAC36() {
+		ISuiteChainee suite;
+		try {
+<span class="fc" id="L421">			String vieuxContenu = loadOldContent(&quot;testac36.properties&quot;);</span>
+<span class="fc" id="L422">			suite = new SuiteChainee(&quot;testac36.properties&quot;, &quot;addition&quot;, 10, 0, 1, false);</span>
+<span class="fc" id="L423">			assertTrue(suite.toString().equals(vieuxContenu+&quot;10&quot;));</span>
+<span class="pc" id="L424">		} catch (Exception e) {</span>
+<span class="nc" id="L425">			e.printStackTrace();</span>
+		}
+<span class="fc" id="L427">	}</span>
+	
+	@Test
+	public void testAC37() {
+		ISuiteChainee suite;
+		try {
+<span class="fc" id="L433">			suite = new SuiteChainee(&quot;testac37.properties&quot;, &quot;addition&quot;, 10, 0, 2, true);</span>
+<span class="fc" id="L434">			assertTrue(suite.toString().equals(&quot;10, 0&quot;));</span>
+<span class="pc" id="L435">		} catch (Exception e) {</span>
+<span class="nc" id="L436">			e.printStackTrace();</span>
+		}
+<span class="fc" id="L438">	}</span>
+	
+	@Test
+	public void testAC38() {
+		ISuiteChainee suite;
+		try {
+<span class="fc" id="L444">			String vieuxContenu = loadOldContent(&quot;testac38.properties&quot;);</span>
+<span class="fc" id="L445">			suite = new SuiteChainee(&quot;testac38.properties&quot;, &quot;addition&quot;, 10, 0, 2, false);</span>
+<span class="fc" id="L446">			assertTrue(suite.toString().equals(vieuxContenu+&quot;10, 0&quot;));</span>
+<span class="pc" id="L447">		} catch (Exception e) {</span>
+<span class="nc" id="L448">			e.printStackTrace();</span>
+		}
+<span class="fc" id="L450">	}</span>
+	
+	@Test
+	public void testAC39() {
+		ISuiteChainee suite;
+		try {
+<span class="fc" id="L456">			suite = new SuiteChainee(&quot;testac39.properties&quot;, &quot;addition&quot;, 10, 0, 5, true);</span>
+<span class="fc" id="L457">			assertTrue(suite.toString().equals(&quot;10, 0, 10, 10, 20&quot;));</span>
+<span class="pc" id="L458">		} catch (Exception e) {</span>
+<span class="nc" id="L459">			e.printStackTrace();</span>
+		}
+<span class="fc" id="L461">	}</span>
+	
+	@Test
+	public void testAC40() {
+		ISuiteChainee suite;
+		try {
+<span class="fc" id="L467">			String vieuxContenu = loadOldContent(&quot;testac40.properties&quot;);</span>
+<span class="fc" id="L468">			suite = new SuiteChainee(&quot;testac40.properties&quot;, &quot;addition&quot;, 10, 0, 5, false);</span>
+<span class="fc" id="L469">			assertTrue(suite.toString().equals(vieuxContenu+&quot;10, 0, 10, 10, 20&quot;));</span>
+<span class="pc" id="L470">		} catch (Exception e) {</span>
+<span class="nc" id="L471">			e.printStackTrace();</span>
+		}
+<span class="fc" id="L473">	}</span>
+	
+	@Test
+	public void testAC41() {
+		ISuiteChainee suite;
+		try {
+<span class="fc" id="L479">			suite = new SuiteChainee(&quot;testac41.properties&quot;, &quot;soustraction&quot;, 10, 0, 0, true);</span>
+<span class="fc" id="L480">			assertTrue(suite.toString().equals(&quot;&quot;));</span>
+<span class="pc" id="L481">		} catch (Exception e) {</span>
+<span class="nc" id="L482">			e.printStackTrace();</span>
+		}
+<span class="fc" id="L484">	}</span>
+	
+	@Test
+	public void testAC42() {
+		ISuiteChainee suite;
+		try {
+<span class="fc" id="L490">			String vieuxContenu = loadOldContent(&quot;testac42.properties&quot;);</span>
+<span class="fc" id="L491">			suite = new SuiteChainee(&quot;testac42.properties&quot;, &quot;soustraction&quot;, 10, 0, 0, false);</span>
+<span class="fc" id="L492">			assertTrue(suite.toString().equals(vieuxContenu+&quot;&quot;));</span>
+<span class="pc" id="L493">		} catch (Exception e) {</span>
+<span class="nc" id="L494">			e.printStackTrace();</span>
+		}
+<span class="fc" id="L496">	}</span>
+
+	@Test
+	public void testAC43() {
+		ISuiteChainee suite;
+		try {
+<span class="fc" id="L502">			suite = new SuiteChainee(&quot;testac43.properties&quot;, &quot;soustraction&quot;, 10, 0, 1, true);</span>
+<span class="fc" id="L503">			assertTrue(suite.toString().equals(&quot;10&quot;));</span>
+<span class="pc" id="L504">		} catch (Exception e) {</span>
+<span class="nc" id="L505">			e.printStackTrace();</span>
+		}
+<span class="fc" id="L507">	}</span>
+	
+	@Test
+	public void testAC44() {
+		ISuiteChainee suite;
+		try {
+<span class="fc" id="L513">			String vieuxContenu = loadOldContent(&quot;testac44.properties&quot;);</span>
+<span class="fc" id="L514">			suite = new SuiteChainee(&quot;testac44.properties&quot;, &quot;soustraction&quot;, 10, 0, 1, false);</span>
+<span class="fc" id="L515">			assertTrue(suite.toString().equals(vieuxContenu+&quot;10&quot;));</span>
+<span class="pc" id="L516">		} catch (Exception e) {</span>
+<span class="nc" id="L517">			e.printStackTrace();</span>
+		}
+<span class="fc" id="L519">	}</span>
+	
+	@Test
+	public void testAC45() {
+		ISuiteChainee suite;
+		try {
+<span class="fc" id="L525">			suite = new SuiteChainee(&quot;testac45.properties&quot;, &quot;soustraction&quot;, 10, 0, 2, true);</span>
+<span class="fc" id="L526">			assertTrue(suite.toString().equals(&quot;10, 0&quot;));</span>
+<span class="pc" id="L527">		} catch (Exception e) {</span>
+<span class="nc" id="L528">			e.printStackTrace();</span>
+		}
+<span class="fc" id="L530">	}</span>
+	
+	@Test
+	public void testAC46() {
+		ISuiteChainee suite;
+		try {
+<span class="fc" id="L536">			String vieuxContenu = loadOldContent(&quot;testac46.properties&quot;);</span>
+<span class="fc" id="L537">			suite = new SuiteChainee(&quot;testac46.properties&quot;, &quot;soustraction&quot;, 10, 0, 2, false);</span>
+<span class="fc" id="L538">			assertTrue(suite.toString().equals(vieuxContenu+&quot;10, 0&quot;));</span>
+<span class="pc" id="L539">		} catch (Exception e) {</span>
+<span class="nc" id="L540">			e.printStackTrace();</span>
+		}
+<span class="fc" id="L542">	}</span>
+	
+	@Test
+	public void testAC47() {
+		ISuiteChainee suite;
+		try {
+<span class="fc" id="L548">			suite = new SuiteChainee(&quot;testac47.properties&quot;, &quot;soustraction&quot;, 10, 0, 5, true);</span>
+<span class="fc" id="L549">			assertTrue(suite.toString().equals(&quot;10, 0, 10, -10, 20&quot;));</span>
+<span class="pc" id="L550">		} catch (Exception e) {</span>
+<span class="nc" id="L551">			e.printStackTrace();</span>
+		}
+<span class="fc" id="L553">	}</span>
+	
+	@Test
+	public void testAC48() {
+		ISuiteChainee suite;
+		try {
+<span class="fc" id="L559">			String vieuxContenu = loadOldContent(&quot;testac48.properties&quot;);</span>
+<span class="fc" id="L560">			suite = new SuiteChainee(&quot;testac48.properties&quot;, &quot;soustraction&quot;, 10, 0, 5, false);</span>
+<span class="fc" id="L561">			assertTrue(suite.toString().equals(vieuxContenu+&quot;10, 0, 10, -10, 20&quot;));</span>
+<span class="pc" id="L562">		} catch (Exception e) {</span>
+<span class="nc" id="L563">			e.printStackTrace();</span>
+		}
+<span class="fc" id="L565">	}</span>
+	
+	@Test
+	public void testAC49() {
+		ISuiteChainee suite;
+		try {
+<span class="fc" id="L571">			suite = new SuiteChainee(&quot;testac49.properties&quot;, &quot;multiplication&quot;, 10, 0, 0, true);</span>
+<span class="fc" id="L572">			assertTrue(suite.toString().equals(&quot;&quot;));</span>
+<span class="pc" id="L573">		} catch (Exception e) {</span>
+<span class="nc" id="L574">			e.printStackTrace();</span>
+		}
+<span class="fc" id="L576">	}</span>
+	
+	@Test
+	public void testAC50() {
+		ISuiteChainee suite;
+		try {
+<span class="fc" id="L582">			String vieuxContenu = loadOldContent(&quot;testac50.properties&quot;);</span>
+<span class="fc" id="L583">			suite = new SuiteChainee(&quot;testac50.properties&quot;, &quot;multiplication&quot;, 10, 0, 0, false);</span>
+<span class="fc" id="L584">			assertTrue(suite.toString().equals(vieuxContenu+&quot;&quot;));</span>
+<span class="pc" id="L585">		} catch (Exception e) {</span>
+<span class="nc" id="L586">			e.printStackTrace();</span>
+		}
+<span class="fc" id="L588">	}</span>
+
+	@Test
+	public void testAC51() {
+		ISuiteChainee suite;
+		try {
+<span class="fc" id="L594">			suite = new SuiteChainee(&quot;testac51.properties&quot;, &quot;multiplication&quot;, 10, 0, 1, true);</span>
+<span class="fc" id="L595">			assertTrue(suite.toString().equals(&quot;10&quot;));</span>
+<span class="pc" id="L596">		} catch (Exception e) {</span>
+<span class="nc" id="L597">			e.printStackTrace();</span>
+		}
+<span class="fc" id="L599">	}</span>
+	
+	@Test
+	public void testAC52() {
+		ISuiteChainee suite;
+		try {
+<span class="fc" id="L605">			String vieuxContenu = loadOldContent(&quot;testac52.properties&quot;);</span>
+<span class="fc" id="L606">			suite = new SuiteChainee(&quot;testac52.properties&quot;, &quot;multiplication&quot;, 10, 0, 1, false);</span>
+<span class="fc" id="L607">			assertTrue(suite.toString().equals(vieuxContenu+&quot;10&quot;));</span>
+<span class="pc" id="L608">		} catch (Exception e) {</span>
+<span class="nc" id="L609">			e.printStackTrace();</span>
+		}
+<span class="fc" id="L611">	}</span>
+	
+	@Test
+	public void testAC53() {
+		ISuiteChainee suite;
+		try {
+<span class="fc" id="L617">			suite = new SuiteChainee(&quot;testac53.properties&quot;, &quot;multiplication&quot;, 10, 0, 2, true);</span>
+<span class="fc" id="L618">			assertTrue(suite.toString().equals(&quot;10, 0&quot;));</span>
+<span class="pc" id="L619">		} catch (Exception e) {</span>
+<span class="nc" id="L620">			e.printStackTrace();</span>
+		}
+<span class="fc" id="L622">	}</span>
+	
+	@Test
+	public void testAC54() {
+		ISuiteChainee suite;
+		try {
+<span class="fc" id="L628">			String vieuxContenu = loadOldContent(&quot;testac54.properties&quot;);</span>
+<span class="fc" id="L629">			suite = new SuiteChainee(&quot;testac54.properties&quot;, &quot;multiplication&quot;, 10, 0, 2, false);</span>
+<span class="fc" id="L630">			assertTrue(suite.toString().equals(vieuxContenu+&quot;10, 0&quot;));</span>
+<span class="pc" id="L631">		} catch (Exception e) {</span>
+<span class="nc" id="L632">			e.printStackTrace();</span>
+		}
+<span class="fc" id="L634">	}</span>
+	
+	@Test
+	public void testAC55() {
+		ISuiteChainee suite;
+		try {
+<span class="fc" id="L640">			suite = new SuiteChainee(&quot;testac55.properties&quot;, &quot;multiplication&quot;, 10, 0, 5, true);</span>
+<span class="fc" id="L641">			assertTrue(suite.toString().equals(&quot;10, 0, 0, 0, 0&quot;));</span>
+<span class="pc" id="L642">		} catch (Exception e) {</span>
+<span class="nc" id="L643">			e.printStackTrace();</span>
+		}
+<span class="fc" id="L645">	}</span>
+	
+	@Test
+	public void testAC56() {
+		ISuiteChainee suite;
+		try {
+<span class="fc" id="L651">			String vieuxContenu = loadOldContent(&quot;testac56.properties&quot;);</span>
+<span class="fc" id="L652">			suite = new SuiteChainee(&quot;testac56.properties&quot;, &quot;multiplication&quot;, 10, 0, 5, false);</span>
+<span class="fc" id="L653">			assertTrue(suite.toString().equals(vieuxContenu+&quot;10, 0, 0, 0, 0&quot;));</span>
+<span class="pc" id="L654">		} catch (Exception e) {</span>
+<span class="nc" id="L655">			e.printStackTrace();</span>
+		}
+<span class="fc" id="L657">	}</span>
+	
+	@Test
+	public void testAC57() {
+		ISuiteChainee suite;
+		try {
+<span class="fc" id="L663">			suite = new SuiteChainee(&quot;testac57.properties&quot;, &quot;division&quot;, 10, 0, 0, true);</span>
+<span class="fc" id="L664">			assertTrue(suite.toString().equals(&quot;&quot;));</span>
+<span class="pc" id="L665">		} catch (Exception e) {</span>
+<span class="nc" id="L666">			e.printStackTrace();</span>
+		}
+<span class="fc" id="L668">	}</span>
+	
+	@Test
+	public void testAC58() {
+		ISuiteChainee suite;
+		try {
+<span class="fc" id="L674">			String vieuxContenu = loadOldContent(&quot;testac58.properties&quot;);</span>
+<span class="fc" id="L675">			suite = new SuiteChainee(&quot;testac58.properties&quot;, &quot;division&quot;, 10, 0, 0, false);</span>
+<span class="fc" id="L676">			assertTrue(suite.toString().equals(vieuxContenu+&quot;&quot;));</span>
+<span class="pc" id="L677">		} catch (Exception e) {</span>
+<span class="nc" id="L678">			e.printStackTrace();</span>
+		}
+<span class="fc" id="L680">	}</span>
+
+	@Test
+	public void testAC59() {
+		ISuiteChainee suite;
+		try {
+<span class="fc" id="L686">			suite = new SuiteChainee(&quot;testac59.properties&quot;, &quot;division&quot;, 10, 0, 1, true);</span>
+<span class="fc" id="L687">			assertTrue(suite.toString().equals(&quot;10&quot;));</span>
+<span class="pc" id="L688">		} catch (Exception e) {</span>
+<span class="nc" id="L689">			e.printStackTrace();</span>
+		}
+<span class="fc" id="L691">	}</span>
+	
+	@Test
+	public void testAC60() {
+		ISuiteChainee suite;
+		try {
+<span class="fc" id="L697">			String vieuxContenu = loadOldContent(&quot;testac60.properties&quot;);</span>
+<span class="fc" id="L698">			suite = new SuiteChainee(&quot;testac60.properties&quot;, &quot;division&quot;, 10, 0, 1, false);</span>
+<span class="fc" id="L699">			assertTrue(suite.toString().equals(vieuxContenu+&quot;10&quot;));</span>
+<span class="pc" id="L700">		} catch (Exception e) {</span>
+<span class="nc" id="L701">			e.printStackTrace();</span>
+		}
+<span class="fc" id="L703">	}</span>
+	
+	@Test
+	public void testAC61() {
+		ISuiteChainee suite;
+		try {
+<span class="fc" id="L709">			suite = new SuiteChainee(&quot;testac61.properties&quot;, &quot;division&quot;, 10, 0, 2, true);</span>
+<span class="fc" id="L710">			assertTrue(suite.toString().equals(&quot;10, 0&quot;));</span>
+<span class="pc" id="L711">		} catch (Exception e) {</span>
+<span class="nc" id="L712">			e.printStackTrace();</span>
+		}
+<span class="fc" id="L714">	}</span>
+	
+	@Test
+	public void testAC62() {
+		ISuiteChainee suite;
+		try {
+<span class="fc" id="L720">			String vieuxContenu = loadOldContent(&quot;testac62.properties&quot;);</span>
+<span class="fc" id="L721">			suite = new SuiteChainee(&quot;testac62.properties&quot;, &quot;division&quot;, 10, 0, 2, false);</span>
+<span class="fc" id="L722">			assertTrue(suite.toString().equals(vieuxContenu+&quot;10, 0&quot;));</span>
+<span class="pc" id="L723">		} catch (Exception e) {</span>
+<span class="nc" id="L724">			e.printStackTrace();</span>
+		}
+<span class="fc" id="L726">	}</span>
+	
+	@Test(expected = Exception.class)
+	public void testAC63() throws Exception {
+		ISuiteChainee suite;
+<span class="nc" id="L731">		suite = new SuiteChainee(&quot;testac63.properties&quot;, &quot;division&quot;, 10, 0, 5, true);</span>
+
+<span class="nc" id="L733">	}</span>
+	
+	@Test (expected = Exception.class)
+	public void testAC64() throws Exception {
+		ISuiteChainee suite;
+<span class="nc" id="L738">		suite = new SuiteChainee(&quot;testac64.properties&quot;, &quot;division&quot;, 10, 0, 5, false);</span>
+
+<span class="nc" id="L740">	}</span>
+	
+	private String loadOldContent(String filename){
+		// Essai d'ouvrir un stream du fichier.
+<span class="fc" id="L744">        Properties properties = new Properties();</span>
+<span class="fc" id="L745">		File file = new File(filename);</span>
+		FileInputStream fileInput;
+		try 
+		{	
+<span class="fc" id="L749">			fileInput = new FileInputStream(file);</span>
+<span class="fc" id="L750">			properties.load(fileInput);</span>
+<span class="fc" id="L751">		} </span>
+<span class="nc" id="L752">		catch (FileNotFoundException e)</span>
+		{
+			// Fichier introuvable, on va créer un nouveau fichier plus tard.
+<span class="nc" id="L755">			System.out.println(&quot;Fichier introuvable.&quot;);</span>
+<span class="nc" id="L756">			return null;</span>
+		} 
+<span class="nc" id="L758">		catch (IOException e) </span>
+		{
+<span class="nc" id="L760">			e.printStackTrace();</span>
+<span class="nc" id="L761">			return null;</span>
+		}
+<span class="fc" id="L763">		String oldContent = properties.getProperty(&quot;contenu&quot;);</span>
+<span class="pc bpc" id="L764" title="1 of 4 branches missed.">		if(!(oldContent == null || oldContent.isEmpty()))</span>
+		{
+<span class="fc" id="L766">			oldContent += &quot;, &quot;;</span>
+		}
+
+<span class="fc" id="L769">		return oldContent;</span>
+	}
+}
+</pre><div class="footer"><span class="right">Created with <a href="http://www.eclemma.org/jacoco">JaCoCo</a> 0.7.2.201409121644</span>TestAC (2015-10-05 10:03:01)</div></body></html>
