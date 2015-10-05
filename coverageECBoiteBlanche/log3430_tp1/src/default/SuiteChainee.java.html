@@ -1,0 +1,462 @@
+<?xml version="1.0" encoding="UTF-8"?><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml" lang="fr"><head><meta http-equiv="Content-Type" content="text/html;charset=UTF-8"/><link rel="stylesheet" href="../../../.resources/report.css" type="text/css"/><link rel="shortcut icon" href="../../../.resources/report.gif" type="image/gif"/><title>SuiteChainee.java</title><link rel="stylesheet" href="../../../.resources/prettify.css" type="text/css"/><script type="text/javascript" src="../../../.resources/prettify.js"></script></head><body onload="window['PR_TAB_WIDTH']=4;prettyPrint()"><div class="breadcrumb" id="breadcrumb"><span class="info"><a href="../../../.sessions.html" class="el_session">Sessions</a></span><a href="../../../index.html" class="el_report">TestECBoiteBlanche (2015-10-05 09:53:16)</a> &gt; <a href="../../index.html" class="el_group">log3430_tp1</a> &gt; <a href="../index.html" class="el_bundle">src</a> &gt; <a href="index.source.html" class="el_package">default</a> &gt; <span class="el_source">SuiteChainee.java</span></div><h1>SuiteChainee.java</h1><pre class="source lang-java linenums">import java.io.File;
+import java.io.FileInputStream;
+import java.io.FileNotFoundException;
+import java.io.FileOutputStream;
+import java.io.IOException;
+import java.util.Properties;
+
+/**
+ * @author David Binh Quang Tran (1688466) &amp; Charles Tremblay (1687959)
+ * LOG3430 TP1
+ */
+
+/**
+ *	Classe renpresentant la suite chainee pour le tp1.
+ */
+public class SuiteChainee implements ISuiteChainee {
+
+    /*
+    * Constructeur definissant l'operateur, les deux premieres valeurs et la
+    * taille de la suite chainee.
+    */
+<span class="fc" id="L22">	public SuiteChainee(String chemin, String operateur, int val1, int val2, int taille, boolean estVide) throws Exception</span>
+	{
+		// Initialiser les membres de la classe.
+		
+<span class="fc" id="L26">		operateurInterne = operateur;</span>
+<span class="fc" id="L27">		cheminInterne = chemin;</span>
+<span class="fc" id="L28">		calculatrice = new Calculatrice();</span>
+<span class="fc" id="L29">		listeInterne = new MaListe();</span>
+<span class="fc" id="L30">		listeInterne.setIndexInterne(0);</span>
+		
+<span class="fc bfc" id="L32" title="All 2 branches covered.">		if(estVide)</span>
+		{
+<span class="fc" id="L34">			reset();</span>
+		}
+		
+		// Creer les proprietes.
+<span class="fc" id="L38">		Properties properties = new Properties();</span>
+		
+		// Essai d'ouvrir un stream du fichier.
+<span class="fc" id="L41">		File file = new File(chemin);</span>
+		FileInputStream fileInput;
+		
+<span class="fc" id="L44">		fileInput = new FileInputStream(file);</span>
+<span class="fc" id="L45">		properties.load(fileInput);</span>
+			
+		// Creation de la suite.
+		
+<span class="fc bfc" id="L49" title="All 2 branches covered.">		if(taille &gt;= 1)</span>
+		{
+<span class="fc" id="L51">			listeInterne.setPremierElement(new ElementSuite(val1));</span>
+		}
+<span class="fc bfc" id="L53" title="All 2 branches covered.">		if(taille &gt;= 2)</span>
+		{
+<span class="fc" id="L55">			listeInterne.add(new ElementSuite(val2));</span>
+		}
+		
+<span class="fc" id="L58">		int valeurCourante1 = val1;</span>
+<span class="fc" id="L59">		int valeurCourante2 = val2;</span>
+		
+<span class="fc bfc" id="L61" title="All 2 branches covered.">		if(taille &lt; 0){</span>
+<span class="fc" id="L62">			throw new Exception(&quot;Taille negative.&quot;);</span>
+		}
+		
+<span class="fc bfc" id="L65" title="All 2 branches covered.">		if(taille &gt; 10){</span>
+<span class="fc" id="L66">			throw new Exception(&quot;Taille excedant 10.&quot;);</span>
+		}
+		
+		// Puisque l'element #1 et l'element #2 sont deja dans la suite chainee, on commence a i=2
+<span class="pc bpc" id="L70" title="4 of 13 branches missed.">		switch(operateur){</span>
+		case &quot;addition&quot;:
+<span class="fc bfc" id="L72" title="All 2 branches covered.">			for (int i = 2; i &lt; taille; i++){</span>
+<span class="fc" id="L73">				int tampon = valeurCourante2;</span>
+<span class="fc" id="L74">				valeurCourante2 = calculatrice.addition(valeurCourante1, valeurCourante2);</span>
+<span class="fc" id="L75">				valeurCourante1 = tampon;</span>
+				
+<span class="fc" id="L77">				listeInterne.add(new ElementSuite(valeurCourante2));</span>
+			}
+<span class="fc" id="L79">			break;</span>
+		case &quot;soustraction&quot;:
+<span class="fc bfc" id="L81" title="All 2 branches covered.">			for (int i = 2; i &lt; taille; i++){</span>
+<span class="fc" id="L82">				int tampon = valeurCourante2;</span>
+<span class="fc" id="L83">				valeurCourante2 = calculatrice.soustraction(valeurCourante1, valeurCourante2);</span>
+<span class="fc" id="L84">				valeurCourante1 = tampon;</span>
+				
+<span class="fc" id="L86">				listeInterne.add(new ElementSuite(valeurCourante2));</span>
+			}
+<span class="fc" id="L88">			break;</span>
+		case &quot;multiplication&quot;:
+<span class="fc bfc" id="L90" title="All 2 branches covered.">			for (int i = 2; i &lt; taille; i++){</span>
+<span class="fc" id="L91">				int tampon = valeurCourante2;</span>
+<span class="fc" id="L92">				valeurCourante2 = calculatrice.multiplication(valeurCourante1, valeurCourante2);</span>
+<span class="fc" id="L93">				valeurCourante1 = tampon;</span>
+				
+<span class="fc" id="L95">				listeInterne.add(new ElementSuite(valeurCourante2));</span>
+			}
+<span class="fc" id="L97">			break;</span>
+		case &quot;division&quot;:
+<span class="fc bfc" id="L99" title="All 2 branches covered.">			for (int i = 2; i &lt; taille; i++){</span>
+<span class="fc" id="L100">				int tampon = valeurCourante2;</span>
+<span class="fc" id="L101">				valeurCourante2 = calculatrice.division(valeurCourante1, valeurCourante2);</span>
+<span class="fc" id="L102">				valeurCourante1 = tampon;</span>
+				
+<span class="fc" id="L104">				listeInterne.add(new ElementSuite(valeurCourante2));</span>
+			}
+<span class="fc" id="L106">			break;</span>
+		default:
+<span class="fc" id="L108">			throw new Exception(&quot;OpÃ©rateur invalide.&quot;);</span>
+		}
+		
+		// Remplir le fichier.
+<span class="fc" id="L112">		properties.setProperty(&quot;val1&quot;, Integer.toString(val1));</span>
+<span class="fc" id="L113">		properties.setProperty(&quot;val2&quot;, Integer.toString(val2));</span>
+<span class="fc" id="L114">		properties.setProperty(&quot;operateur&quot;, operateurInterne);</span>
+<span class="fc" id="L115">		properties.setProperty(&quot;index&quot;, Integer.toString(listeInterne.getIndexInterne()));</span>
+<span class="fc" id="L116">		properties.setProperty(&quot;taille&quot;, Integer.toString(taille));</span>
+		
+		// Charge le contenu deja present.
+<span class="fc" id="L119">		String ancienContenu = properties.getProperty(&quot;contenu&quot;);</span>
+		/*if(ancienContenu == null)
+		{
+			ancienContenu = &quot;&quot;;
+		}*/
+		
+<span class="pc bpc" id="L125" title="1 of 4 branches missed.">		if(estVide || ancienContenu.isEmpty()){</span>
+<span class="fc" id="L126">		properties.setProperty(&quot;contenu&quot;, toString());</span>
+<span class="fc" id="L127">		} else {</span>
+<span class="fc" id="L128">			properties.setProperty(&quot;contenu&quot;, ancienContenu + &quot;, &quot; + toString());</span>
+		}
+		
+		// On ecrit dans le fichier specifie.
+		FileOutputStream fileOut;
+
+<span class="fc" id="L134">		fileOut = new FileOutputStream(file);</span>
+<span class="fc" id="L135">		properties.store(fileOut, &quot;Suite Chainee&quot;);</span>
+<span class="fc" id="L136">		fileOut.close();</span>
+      
+<span class="fc" id="L138">        charger();</span>
+<span class="fc" id="L139">	}</span>
+
+    /*
+    * Appeler cette méthode pour réinitialiser la suite chaînée.
+    * Elle n’aura pas d’éléments.
+    */
+	@Override
+	public void reset() {
+<span class="fc" id="L147">            charger();</span>
+<span class="fc" id="L148">		ElementSuite courant = listeInterne.getPremierElement();</span>
+		ElementSuite suivant;
+
+<span class="fc bfc" id="L151" title="All 4 branches covered.">		while(courant != null &amp;&amp; courant.next() != null)</span>
+		{
+<span class="fc" id="L153">			suivant = courant.next();</span>
+<span class="fc" id="L154">			courant.prochain = null;</span>
+<span class="fc" id="L155">			courant = suivant;</span>
+		}
+<span class="fc" id="L157">		listeInterne.setPremierElement(null);</span>
+<span class="fc" id="L158">		listeInterne.setIndexInterne(0);</span>
+<span class="fc" id="L159">		sauvegarder();</span>
+<span class="fc" id="L160">	}</span>
+
+    /*
+    * Appeler cette méthode afin de vérifier si la suite chaînée courante 
+    * est valide (i.e. que les valeurs sont cohérentes avec l’opérateur 
+    * assigné. Si la suite est valide, la valeur retournée sera true. 
+    * Sinon, la valeur retournée sera false.
+    */
+	@Override
+	public boolean isValid() {
+<span class="nc" id="L170">		boolean toutEstCorrecte = true;</span>
+<span class="nc" id="L171">		charger();</span>
+		// La suite n'est pas verifiable s'il y a 2 elements ou moins.
+<span class="nc bnc" id="L173" title="All 4 branches missed.">		if(listeInterne.getPremierElement() != null &amp;&amp; listeInterne.getPremierElement().next() != null)</span>
+		{
+<span class="nc" id="L175">			ElementSuite elementTemp1 = listeInterne.getPremierElement();</span>
+<span class="nc" id="L176">			ElementSuite elementTemp2 = listeInterne.getPremierElement().next();</span>
+			
+			try
+			{
+<span class="nc bnc" id="L180" title="All 13 branches missed.">				switch(operateurInterne){</span>
+				case &quot;addition&quot;:
+<span class="nc bnc" id="L182" title="All 2 branches missed.">					while(toutEstCorrecte)</span>
+					{
+						// On dÃ©termine la prochaine valeur.
+<span class="nc" id="L185">						int prochaineValeur = calculatrice.addition(elementTemp1.valeur, elementTemp2.valeur);</span>
+						// On avance dans la suite.
+<span class="nc" id="L187">						elementTemp1 = elementTemp2;</span>
+<span class="nc bnc" id="L188" title="All 2 branches missed.">						if(elementTemp2.next() == null){</span>
+<span class="nc" id="L189">							break;</span>
+						}
+<span class="nc" id="L191">						elementTemp2 = elementTemp2.next();</span>
+						// On vÃ©rifie si la nouvelle valeur respecte la rÃ¨gle ou non.
+<span class="nc bnc" id="L193" title="All 2 branches missed.">						if(elementTemp2.valeur != prochaineValeur)</span>
+						{
+<span class="nc" id="L195">							toutEstCorrecte = false;</span>
+						}
+					}
+<span class="nc" id="L198">					break;</span>
+				case &quot;soustraction&quot;:
+<span class="nc bnc" id="L200" title="All 2 branches missed.">					while(toutEstCorrecte)</span>
+					{
+						// On dÃ©termine la prochaine valeur.
+<span class="nc" id="L203">						int prochaineValeur = calculatrice.soustraction(elementTemp1.valeur, elementTemp2.valeur);</span>
+						// On avance dans la suite.
+<span class="nc" id="L205">						elementTemp1 = elementTemp2;</span>
+<span class="nc bnc" id="L206" title="All 2 branches missed.">						if(elementTemp2.next() == null){</span>
+<span class="nc" id="L207">							break;</span>
+						}
+<span class="nc" id="L209">						elementTemp2 = elementTemp2.next();</span>
+						// On vÃ©rifie si la nouvelle valeur respecte la rÃ¨gle ou non.
+<span class="nc bnc" id="L211" title="All 2 branches missed.">						if(elementTemp2.valeur != prochaineValeur)</span>
+						{
+<span class="nc" id="L213">							toutEstCorrecte = false;</span>
+						}
+					}
+<span class="nc" id="L216">					break;</span>
+				case &quot;multiplication&quot;:
+<span class="nc bnc" id="L218" title="All 2 branches missed.">					while(toutEstCorrecte)</span>
+					{
+						// On dÃ©termine la prochaine valeur.
+<span class="nc" id="L221">						int prochaineValeur = calculatrice.multiplication(elementTemp1.valeur, elementTemp2.valeur);</span>
+						// On avance dans la suite.
+<span class="nc" id="L223">						elementTemp1 = elementTemp2;</span>
+<span class="nc bnc" id="L224" title="All 2 branches missed.">						if(elementTemp2.next() == null){</span>
+<span class="nc" id="L225">							break;</span>
+						}
+<span class="nc" id="L227">						elementTemp2 = elementTemp2.next();</span>
+						// On vÃ©rifie si la nouvelle valeur respecte la rÃ¨gle ou non.
+<span class="nc bnc" id="L229" title="All 2 branches missed.">						if(elementTemp2.valeur != prochaineValeur)</span>
+						{
+<span class="nc" id="L231">							toutEstCorrecte = false;</span>
+						}
+					}
+<span class="nc" id="L234">					break;</span>
+				case &quot;division&quot;:
+<span class="nc bnc" id="L236" title="All 2 branches missed.">					while(toutEstCorrecte)</span>
+					{
+						// On dÃ©termine la prochaine valeur.
+<span class="nc" id="L239">						int prochaineValeur = calculatrice.division(elementTemp1.valeur, elementTemp2.valeur);</span>
+						// On avance dans la suite.
+<span class="nc" id="L241">						elementTemp1 = elementTemp2;</span>
+<span class="nc bnc" id="L242" title="All 2 branches missed.">						if(elementTemp2.next() == null){</span>
+<span class="nc" id="L243">							break;</span>
+						}
+<span class="nc" id="L245">						elementTemp2 = elementTemp2.next();</span>
+						// On vÃ©rifie si la nouvelle valeur respecte la rÃ¨gle ou non.
+<span class="nc bnc" id="L247" title="All 2 branches missed.">						if(elementTemp2.valeur != prochaineValeur)</span>
+						{
+<span class="nc" id="L249">							toutEstCorrecte = false;</span>
+						}
+					}
+<span class="nc" id="L252">					break;</span>
+				default:
+<span class="nc" id="L254">					System.out.println(operateurInterne);</span>
+<span class="nc" id="L255">					throw new Exception(&quot;OpÃ©rateur invalide.&quot;);</span>
+				}
+			}
+<span class="nc" id="L258">			catch (Exception e)</span>
+			{
+<span class="nc" id="L260">				System.out.println(e.getMessage());</span>
+<span class="nc" id="L261">				return false;</span>
+			}
+		}
+<span class="nc" id="L264">		return toutEstCorrecte;</span>
+	}
+	
+    /*
+	* Charge les proprietes du fichier en memoire.
+	*/
+	private void charger(){
+		// Essai d'ouvrir un stream du fichier.
+<span class="fc" id="L272">        Properties properties = new Properties();</span>
+<span class="fc" id="L273">		File file = new File(cheminInterne);</span>
+		FileInputStream fileInput;
+		try 
+		{
+			
+<span class="fc" id="L278">			fileInput = new FileInputStream(file);</span>
+<span class="fc" id="L279">			properties.load(fileInput);</span>
+			
+<span class="fc" id="L281">		} </span>
+<span class="fc" id="L282">		catch (FileNotFoundException e)</span>
+		{
+			// Fichier introuvable, on va créer un nouveau fichier plus tard.
+<span class="fc" id="L285">			System.out.println(&quot;Fichier introuvable.&quot;);</span>
+<span class="fc" id="L286">			return;</span>
+		} 
+<span class="nc" id="L288">		catch (IOException e) </span>
+		{
+<span class="nc" id="L290">			e.printStackTrace();</span>
+<span class="nc" id="L291">			return;</span>
+		}
+		
+		// On charge les properties du fichier (si elles existent)
+<span class="fc" id="L295">		listeInterne.setIndexInterne(Integer.parseInt(properties.getProperty(&quot;index&quot;)));</span>
+<span class="fc" id="L296">		contenuInterne = properties.getProperty(&quot;contenu&quot;);</span>
+<span class="pc bpc" id="L297" title="1 of 4 branches missed.">		if(contenuInterne == null || contenuInterne.isEmpty())</span>
+		{
+<span class="fc" id="L299">			contenuInterne = &quot;&quot;;</span>
+<span class="fc" id="L300">		} else {</span>
+			// On reset la suite chainee interne
+<span class="fc" id="L302">			ElementSuite courant = listeInterne.getPremierElement();</span>
+			ElementSuite suivant;
+<span class="fc bfc" id="L304" title="All 4 branches covered.">			while(courant != null &amp;&amp; courant.next() != null)</span>
+			{
+<span class="fc" id="L306">				suivant = courant.next();</span>
+<span class="fc" id="L307">				courant.prochain = null;</span>
+<span class="fc" id="L308">				courant = suivant;</span>
+			}
+
+			// On cree un Array contenant les valeurs de contenu. Ex: [&quot;1&quot;, &quot;2&quot;, &quot;3&quot;, &quot;5&quot;]
+<span class="fc" id="L312">			String[] StringArrayContenu = contenuInterne.split(&quot;, &quot;);</span>
+			// On batit la suite chainee grace a ce Array
+<span class="fc" id="L314">			listeInterne.setPremierElement(new ElementSuite(Integer.parseInt(StringArrayContenu[0])));</span>
+<span class="fc bfc" id="L315" title="All 2 branches covered.">			for(int i = 1; i &lt; StringArrayContenu.length; i++) {</span>
+<span class="fc" id="L316">				listeInterne.add(new ElementSuite(Integer.parseInt(StringArrayContenu[i])));</span>
+			}
+		}
+<span class="fc" id="L319">	}</span>
+	
+	/*
+	* Sauvegarde l'etat de la suite dans le fichier.
+	*/
+	private void sauvegarder()
+	{            
+        // On charge le fichier .properties
+<span class="fc" id="L327">        Properties properties = new Properties();</span>
+        // Essai d'ouvrir un stream du fichier.
+<span class="fc" id="L329">        File file = new File(cheminInterne);</span>
+        FileInputStream fileInput;
+        try
+        {
+               
+<span class="fc" id="L334">                fileInput = new FileInputStream(file);</span>
+<span class="fc" id="L335">                properties.load(fileInput);</span>
+               
+<span class="fc" id="L337">        }</span>
+<span class="fc" id="L338">        catch (FileNotFoundException e)</span>
+        {
+                // Fichier introuvable, on va créer un nouveau fichier plus tard.
+<span class="fc" id="L341">                System.out.println(&quot;Fichier introuvable.&quot;);</span>
+<span class="fc" id="L342">                return;</span>
+        }
+<span class="nc" id="L344">        catch (IOException e)</span>
+        {
+<span class="nc" id="L346">                e.printStackTrace();</span>
+<span class="nc" id="L347">                return;</span>
+        }
+       
+        // Remplir le fichier.
+<span class="fc" id="L351">        properties.setProperty(&quot;index&quot;, Integer.toString(listeInterne.getIndexInterne()));</span>
+<span class="fc" id="L352">        properties.setProperty(&quot;contenu&quot;, toString());</span>
+       
+        // On écrit dans le fichier spécifié.
+        FileOutputStream fileOut;
+        try {
+<span class="fc" id="L357">                fileOut = new FileOutputStream(file);</span>
+<span class="fc" id="L358">                properties.store(fileOut, &quot;Suite Chainee&quot;);</span>
+<span class="fc" id="L359">                fileOut.close();</span>
+<span class="pc" id="L360">        } catch (FileNotFoundException e) {</span>
+<span class="nc" id="L361">                e.printStackTrace();</span>
+<span class="nc" id="L362">        } catch (IOException e) {</span>
+<span class="nc" id="L363">                e.printStackTrace();</span>
+        }
+<span class="fc" id="L365">	}</span>
+	
+	/*
+	* Appeler cette méthode lorsqu’il est désirable d’ajouter un élément à la fin de la suite chaînée.
+	*/
+	@Override
+	public void add(ElementSuite nouvelElement) {
+<span class="nc" id="L372">	    charger();</span>
+<span class="nc" id="L373">		listeInterne.add(nouvelElement);</span>
+<span class="nc" id="L374">		sauvegarder();</span>
+<span class="nc" id="L375">	}</span>
+
+	/*
+	* Appeler cette méthode pour obtenir l’élément d’une suite chaînée à 
+	* l’index « position » désiré. Dans le cas où « position » est plus 
+	* grand que la taille de la suite chaînée, la méthode retournera null.
+	*/
+	@Override
+	public ElementSuite getAt(int position) {
+<span class="nc" id="L384">		charger();	</span>
+<span class="nc" id="L385">	    return listeInterne.getAt(position);</span>
+	}
+
+	/*
+	* Appeler cette méthode pour obtenir la grandeur de la suite chaînée.
+	*/
+	@Override
+	public int getSize() {
+<span class="nc" id="L393">		charger();</span>
+<span class="nc" id="L394">	    return listeInterne.getSize();</span>
+	}
+
+	/*
+	* Appeler cette méthode pour supprimer l’élément d’une suite chaînée à
+	* l’index « position » désiré. Dans le cas où « position » est plus 
+	* grand que la taille de la suite chaînée, rien ne se passera.
+	*/
+	@Override
+	public void removeAt(int position) {
+<span class="nc" id="L404">		charger();</span>
+<span class="nc" id="L405">		listeInterne.removeAt(position);</span>
+<span class="nc" id="L406">	    sauvegarder();</span>
+<span class="nc" id="L407">	}</span>
+	
+	/*
+	* Appeler cette méthode lorsqu’il faut supprimer l’élément avec la valeur
+	* « element »  de la suite chaînée. Dans le cas où « element » est 
+	* présent multiples fois dans la suite chaînée, alors la première 
+	* instance d’ « element » sera supprimée et les suivantes seront 
+	* intactes.
+	*/
+	@Override
+	public void removeItem(int element) {
+<span class="nc" id="L418">		charger();</span>
+<span class="nc" id="L419">		listeInterne.removeItem(element);</span>
+<span class="nc" id="L420">	    sauvegarder();</span>
+<span class="nc" id="L421">	}</span>
+
+	/*
+	* Appeler cette méthode pour modifier un élément d’une suite chaînée à 
+	* l’index « position » en écrasant l’élément courant avec la valeur 
+	* « nouvelElement ». Dans le cas où « position » est plus grand que la
+	* taille de la suite chaînée, rien ne se passera.
+	*/
+	@Override
+	public void setAt(int nouvelElement, int position) {
+<span class="nc" id="L431">		charger();</span>
+<span class="nc" id="L432">		listeInterne.setAt(nouvelElement, position);</span>
+<span class="nc" id="L433">	    sauvegarder();</span>
+<span class="nc" id="L434">	}</span>
+
+	/*
+	* Appeler cette méthode afin d’obtenir une chaîne de caractères 
+	* représentant les valeurs de la suite chaînée dans le bon ordre. 
+	* Par exemple : « 0, 1, 1, 2 ».
+	*/
+	@Override
+	public String toString(){
+<span class="fc" id="L443">		return listeInterne.toString();</span>
+	}
+
+	// Represente la calculatrice pour effectuer les calculs.
+    private ICalculatrice calculatrice;
+
+	// Represente l'operateur en memoire.
+	private String operateurInterne;
+
+	// Represente le chemin vers le fichier.
+	private String cheminInterne;
+
+	// Represente le contenu de la suite chainee en memoire.
+	private String contenuInterne;
+
+	// Reference vers la liste de la suite chainee.
+	private IMaListe listeInterne;
+	
+}
+</pre><div class="footer"><span class="right">Created with <a href="http://www.eclemma.org/jacoco">JaCoCo</a> 0.7.2.201409121644</span>TestECBoiteBlanche (2015-10-05 09:53:16)</div></body></html>
